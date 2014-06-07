@@ -36,9 +36,20 @@ class Controller(object):
         return Player(tile.row, tile.col)
 
     def __handle_events(self):
+        self.clock.tick(30)
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                print(self.map.getTileByCoords(event.pos[0], event.pos[1]))
+                print(self.map.getTileByCoords(event.pos))
+            if event.type == KEYDOWN:
+                if event.key == K_UP:
+                    self.player.moveNorth()
+                if event.key == K_DOWN:
+                    self.player.moveSouth()
+                if event.key == K_RIGHT:
+                    self.player.moveEast()
+                if event.key == K_LEFT:
+                    self.player.moveWest()

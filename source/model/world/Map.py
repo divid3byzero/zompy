@@ -28,7 +28,7 @@ class Map(object):
                 self.tiles.append(tile)
                 self.sprites.add(tile)
 
-    def getTileByCoords(self, x, y):
+    def getTileByCoords(self, (x ,y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
         row = int(math.ceil(y / BaseTile.HEIGHT))
         if row > 0:
