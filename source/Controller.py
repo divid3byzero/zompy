@@ -1,11 +1,12 @@
+from source.model.objects import Player
+
 __author__ = 'Sebastian'
 
 import sys
-import pygame
 from pygame.locals import *
 from Window import *
-from world.Map import *
-from objects.Player import Player
+from source.model.world.Map import *
+
 pygame.init()
 class Controller(object):
 
