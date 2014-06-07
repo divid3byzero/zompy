@@ -6,9 +6,11 @@ import sys
 from pygame.locals import *
 from Window import *
 from source.model.world.Map import *
-
+from source.model.worker.MapGenerator import MapGenerator
 pygame.init()
 class Controller(object):
+
+    pathToMap = "resources/test.map"
 
     def __init__(self):
         self.mapfile = self.loadMap()
@@ -33,14 +35,8 @@ class Controller(object):
         self.player.draw(self.window.screen)
 
     def loadMap(self):
-        return [
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               ]
+        mapGenerator = MapGenerator(self.pathToMap)
+        return mapGenerator.generateMap()
 
     def initPlayer(self):
         tile = self.map.getWalkableTile()
