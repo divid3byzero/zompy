@@ -1,9 +1,9 @@
-from source.model.objects.Player import Player
 __author__ = 'Sebastian'
 
 import sys
 from pygame.locals import *
 from Window import *
+from source.model.objects.Player import Player
 from source.model.world.Map import *
 
 pygame.init()

@@ -17,12 +17,12 @@ class Movable(BaseTile):
 
     @abstractmethod
     def moveEast(self):
-        pass
+        self.x += Movable.VELOCITY
 
     @abstractmethod
     def moveSouth(self):
-        pass
+        self.y += Movable.VELOCITY
 
     @abstractmethod
     def moveWest(self):
-        pass
+        self.x -= Movable.VELOCITY
