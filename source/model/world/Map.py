@@ -6,7 +6,6 @@ from source.model.world.elements.Wall import *
 
 class Map(object):
 
-
     def __init__(self, mapfile):
         self.mapfile = mapfile
         self.amountHorizontal = len(mapfile[0])
@@ -19,15 +18,15 @@ class Map(object):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
                 if self.mapfile[m][n] == 1:
-                    tile = Tile(m, n, False)
+                    tile = BaseTile(m, n, False)
                 else:
-                    tile = Tile(m, n, True)
+                    tile = BaseTile(m, n, True)
                     self.walkableTiles.append(tile)
                 self.tiles[m][n] = tile
 
     def getTileByCoords(self, x, y):
-        col = x / Tile.WIDTH
-        row = y / Tile.HEIGHT
+        col = x / BaseTile.WIDTH
+        row = y / BaseTile.HEIGHT
         return self.tiles[row][col]
 
     def getWalkableTile(self, row = None, col = None):

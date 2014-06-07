@@ -12,7 +12,7 @@ class Controller(object):
     def __init__(self):
         self.mapfile = self.loadMap()
         self.map = Map(self.mapfile)
-        self.window = Window(len(self.mapfile[0]) * Tile.WIDTH, len(self.mapfile) * Tile.HEIGHT)
+        self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
 
 
