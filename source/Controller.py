@@ -10,7 +10,7 @@ from source.model.worker.MapGenerator import MapGenerator
 pygame.init()
 class Controller(object):
 
-    pathToMap = "resources/test.map"
+    pathToMap = "resources/maps/test.map"
 
     def __init__(self):
         self.mapfile = self.loadMap()
@@ -35,7 +35,7 @@ class Controller(object):
         self.player.draw(self.window.screen)
 
     def loadMap(self):
-        mapGenerator = MapGenerator(self.pathToMap)
+        mapGenerator = MapGenerator()
         return mapGenerator.generateMap()
 
     def initPlayer(self):

@@ -1,3 +1,6 @@
+# Files
 *.pyc
+.DS_STORE
 
+# Directory
 .idea/

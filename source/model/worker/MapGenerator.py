@@ -1,10 +1,10 @@
 __author__ = 'bene'
 
-
+from source.model.worker.FileReader import FileReader
 class MapGenerator(object):
 
-    def __init__(self, pathToMapFile):
-        self.pathToMapFile = pathToMapFile
+    def __init__(self):
+        self.fileReader = FileReader()
 
     def generateMap(self):
         mapFileContent = self.__createMapArrayFromFile()
@@ -27,5 +27,5 @@ class MapGenerator(object):
             raise ValueError("Map is emtpy or cannot be created.ss")
 
     def __createMapArrayFromFile(self):
-        mapFile = open(self.pathToMapFile, "r")
+        mapFile = self.fileReader.getRandomMapFile()
         return mapFile.read().splitlines()
