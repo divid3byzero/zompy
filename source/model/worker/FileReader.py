@@ -14,7 +14,6 @@ class FileReader(object):
         mapFileNames = self.__getMapFileNames()
         return open(mapFileNames[random.randint(0, len(mapFileNames) - 1)])
 
-
     def __getMapFileNames(self):
 
         maps = os.listdir(self.pathToMaps)
