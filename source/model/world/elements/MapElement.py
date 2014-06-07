@@ -7,8 +7,8 @@ import os
 
 class MapElement(BaseTile):
 
-    IMAGE_WALKABLE = pygame.image.load(os.path.join("resources", "images", "mud.png"))
-    IMAGE_NOT_WALKABLE = pygame.image.load(os.path.join("resources", "images", "wall.png"))
+    IMAGE_WALKABLE = pygame.image.load(os.path.join("resources", "images", "map", "mud.png"))
+    IMAGE_NOT_WALKABLE = pygame.image.load(os.path.join("resources", "images", "map", "wall.png"))
 
     def __init__(self, col, row, walkable):
         if walkable:

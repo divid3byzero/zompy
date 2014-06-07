@@ -15,12 +15,13 @@ class Controller(object):
         self.map = Map(self.mapfile)
         self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
+        self.clock = pygame.time.Clock()
 
     def start(self):
         while True:
-            pygame.display.flip()
-            self.drawWorld()
             self.__handle_events()
+            self.drawWorld()
+            pygame.display.flip()
 
     def drawWorld(self):
         self.map.sprites.draw(self.window.screen)
