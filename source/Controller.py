@@ -1,11 +1,11 @@
 __author__ = 'Sebastian'
 
+import sys
 import pygame
-from pygame import locals
+from pygame.locals import *
 from Window import *
 from world.Map import *
 pygame.init()
-
 class Controller(object):
 
     def __init__(self):
@@ -15,8 +15,10 @@ class Controller(object):
         # self.player = Player()
 
     def start(self):
-        self.drawMap()
-        pygame.display.flip()
+        while True:
+            self.drawMap()
+            pygame.display.flip()
+            self.__handle_events()
 
     def drawMap(self):
         for row in self.map.tiles:
@@ -32,3 +34,9 @@ class Controller(object):
                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                ]
+
+    def __handle_events(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit(0)
