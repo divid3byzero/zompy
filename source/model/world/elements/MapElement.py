@@ -5,7 +5,7 @@ __author__ = 'Sebastian'
 import pygame
 
 
-class Wall(BaseTile):
+class MapElement(BaseTile):
 
     COLOR_WALKABLE = (128, 128, 128)
     COLOR_NOT_WALKABLE = (255, 0, 0)
@@ -16,6 +16,6 @@ class Wall(BaseTile):
 
     def draw(self, screen):
         if self.isWalkable:
-            pygame.draw.rect(screen, Wall.COLOR_WALKABLE, self)
+            pygame.draw.rect(screen, MapElement.COLOR_WALKABLE, self)
         else:
-            pygame.draw.rect(screen, Wall.COLOR_NOT_WALKABLE, self)
+            pygame.draw.rect(screen, MapElement.COLOR_NOT_WALKABLE, self)

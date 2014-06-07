@@ -1,7 +1,7 @@
 __author__ = 'Sebastian'
 import random
 
-from source.model.world.elements.Wall import *
+from source.model.world.elements.MapElement import *
 
 
 class Map(object):
@@ -18,9 +18,9 @@ class Map(object):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
                 if self.mapfile[m][n] == 1:
-                    tile = BaseTile(m, n, False)
+                    tile = MapElement(m, n, False)
                 else:
-                    tile = BaseTile(m, n, True)
+                    tile = MapElement(m, n, True)
                     self.walkableTiles.append(tile)
                 self.tiles[m][n] = tile
 
