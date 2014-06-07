@@ -3,19 +3,19 @@ from source.model.base.BaseTile import BaseTile
 __author__ = 'Sebastian'
 
 import pygame
-
+import os
 
 class MapElement(BaseTile):
 
-    COLOR_WALKABLE = (128, 128, 128)
-    COLOR_NOT_WALKABLE = (255, 0, 0)
-
     def __init__(self, col, row, walkable):
-        BaseTile.__init__(self, col, row)
-        self.isWalkable = walkable
 
-    def draw(self, screen):
+        self.isWalkable = walkable
         if self.isWalkable:
-            pygame.draw.rect(screen, MapElement.COLOR_WALKABLE, self)
+            image = os.path.join("ressources", "images", "floor.jpg")
+            print(image)
         else:
-            pygame.draw.rect(screen, MapElement.COLOR_NOT_WALKABLE, self)
+            image = os.path.join("ressources", "images", "wall.jpg")
+            print(image)
+
+        BaseTile.__init__(self, col, row, image)
+

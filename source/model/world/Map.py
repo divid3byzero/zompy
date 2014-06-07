@@ -27,6 +27,7 @@ class Map(object):
     def getTileByCoords(self, x, y):
         col = x / BaseTile.WIDTH
         row = y / BaseTile.HEIGHT
+        print("row {0}, col {1}".format(row, col))
         return self.tiles[row][col]
 
     def getWalkableTile(self, row = None, col = None):

@@ -6,10 +6,17 @@ from source.model.base.Movable import Movable
 
 class Player(Movable):
 
-    COLOR = (0, 255, 0)
+    def __init__(self, row, col, image):
+        Movable.__init__(self, row, col, image)
 
-    def __init__(self, row, col):
-        Movable.__init__(self, row, col)
+    def moveNorth(self):
+        self.y = self.y - 10
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, Player.COLOR, self)
+    def moveEast(self):
+        self.x = self.x + 10
+
+    def moveSouth(self):
+        self.y =  self.y + 10
+
+    def moveWest(self):
+        self.x = self.x - 10

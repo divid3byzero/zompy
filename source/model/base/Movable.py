@@ -6,23 +6,21 @@ from abc import ABCMeta, abstractmethod
 class Movable(BaseTile):
     __metaclass__ = ABCMeta
 
-    VELOCITY = 5
-
-    def __init__(self, row, col):
-        BaseTile.__init__(self, row, col)
+    def __init__(self, row, col, image):
+        BaseTile.__init__(self, row, col, image)
 
     @abstractmethod
     def moveNorth(self):
-        self.y -= Movable.VELOCITY
+        pass
 
     @abstractmethod
     def moveEast(self):
-        self.x += Movable.VELOCITY
+        pass
 
     @abstractmethod
     def moveSouth(self):
-        self.y += Movable.VELOCITY
+        pass
 
     @abstractmethod
     def moveWest(self):
-        self.x -= Movable.VELOCITY
+        pass
