@@ -5,7 +5,7 @@ import os
 import random
 class FileReader(object):
 
-    pathToMaps = "resources/maps"
+    pathToMaps = os.path.join("resources", "maps")
 
     def __init__(self):
         pass
