@@ -10,8 +10,6 @@ from source.model.worker.MapGenerator import MapGenerator
 pygame.init()
 class Controller(object):
 
-    pathToMap = "resources/maps/test.map"
-
     def __init__(self):
         self.mapfile = self.loadMap()
         self.map = Map(self.mapfile)
