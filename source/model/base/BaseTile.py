@@ -3,8 +3,6 @@ __author__ = 'Hanna'
 import pygame
 from abc import ABCMeta, abstractmethod
 
-ololol
-
 class BaseTile(pygame.Rect):
     __metaclass__ = ABCMeta
 

@@ -1,5 +1,4 @@
 from source.model.objects.Player import Player
-
 __author__ = 'Sebastian'
 
 import sys
@@ -47,7 +46,17 @@ class Controller(object):
         return Player(tile.row, tile.col)
 
     def __handle_events(self):
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+            if event.type == KEYDOWN:
+                if event.key == K_UP:
+                    self.player.moveNorth()
+                if event.key == K_RIGHT:
+                    self.player.moveEast()
+                if event.key == K_LEFT:
+                    self.player.moveWest()
+                if event.key == K_DOWN:
+                    self.player.moveSouth()
