@@ -2,7 +2,6 @@ __author__ = 'Sebastian'
 import pygame
 from pygame import locals
 
-
 class Tile(pygame.Rect):
 
     WIDTH = 40
