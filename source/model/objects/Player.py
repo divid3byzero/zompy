@@ -1,7 +1,6 @@
 __author__ = 'Sebastian'
 
 import pygame
-
 from source.model.base.Movable import Movable
 
 
