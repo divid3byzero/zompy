@@ -6,8 +6,8 @@ from abc import ABCMeta, abstractmethod
 class Movable(BaseTile):
     __metaclass__ = ABCMeta
 
-    def __init__(self, row, col):
-        BaseTile.__init__(self, row, col)
+    def __init__(self, row, col, image):
+        BaseTile.__init__(self, row, col, image)
 
     @abstractmethod
     def moveNorth(self):

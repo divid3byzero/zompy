@@ -16,21 +16,15 @@ class Controller(object):
         self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
 
-
     def start(self):
         while True:
-            self.drawMap()
-            self.drawPlayer()
             pygame.display.flip()
+            self.drawWorld()
             self.__handle_events()
 
-    def drawMap(self):
-        for row in self.map.tiles:
-            for tile in row:
-                tile.draw(self.window.screen)
-
-    def drawPlayer(self):
-        self.player.draw(self.window.screen)
+    def drawWorld(self):
+        self.map.sprites.draw(self.window.screen)
+        self.player.sprites.draw(self.window.screen)
 
     def loadMap(self):
         mapGenerator = MapGenerator()
@@ -45,3 +39,5 @@ class Controller(object):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+            if event.type == MOUSEBUTTONDOWN:
+                print(self.map.getTileByCoords(event.pos[0], event.pos[1]))
