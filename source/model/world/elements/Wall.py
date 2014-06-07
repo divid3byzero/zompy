@@ -1,4 +1,4 @@
-from source.model.base import BaseTile
+from source.model.base.BaseTile import BaseTile
 
 __author__ = 'Sebastian'
 

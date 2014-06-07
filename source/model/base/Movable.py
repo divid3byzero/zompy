@@ -1,7 +1,6 @@
-from source.model.base import BaseTile
-
 __author__ = 'Sebastian'
 
+from source.model.base.BaseTile import BaseTile
 from abc import ABCMeta, abstractmethod
 
 class Movable(BaseTile):

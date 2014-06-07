@@ -1,4 +1,4 @@
-from source.model.objects import Player
+from source.model.objects.Player import Player
 
 __author__ = 'Sebastian'
 
