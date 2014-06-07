@@ -24,7 +24,7 @@ class MapGenerator(object):
             return mapStructure
 
         else:
-            raise ValueError("Map is emtpy or cannot be created.ss")
+            raise ValueError("Map is emtpy or cannot be created.")
 
     def __createMapArrayFromFile(self):
         mapFile = self.fileReader.getRandomMapFile()
