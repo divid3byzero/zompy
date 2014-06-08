@@ -30,10 +30,7 @@ class Map(object):
     def getTileByCoords(self, (x ,y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
         row = int(math.ceil(y / BaseTile.HEIGHT))
-        if row == 0:
-            number = col
-        else:
-            number = (row * self.amountHorizontal) + col
+        number = (row * self.amountHorizontal) + col
         return self.tiles[number]
 
     def getWalkableTile(self):
