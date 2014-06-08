@@ -15,22 +15,18 @@ class Controller(object):
         self.map = Map(self.mapfile)
         self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
-
+        self.clock = pygame.time.Clock()
+        self.zombies = pygame.sprite.RenderPlain()
 
     def start(self):
         while True:
-            self.drawMap()
-            self.drawPlayer()
-            pygame.display.flip()
             self.__handle_events()
+            self.drawWorld()
+            pygame.display.flip()
 
-    def drawMap(self):
-        for row in self.map.tiles:
-            for tile in row:
-                tile.draw(self.window.screen)
-
-    def drawPlayer(self):
-        self.player.draw(self.window.screen)
+    def drawWorld(self):
+        self.map.sprites.draw(self.window.screen)
+        self.player.sprites.draw(self.window.screen)
 
     def loadMap(self):
         mapGenerator = MapGenerator()
@@ -41,7 +37,28 @@ class Controller(object):
         return Player(tile.row, tile.col)
 
     def __handle_events(self):
+        self.clock.tick(30)
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+            if event.type == MOUSEBUTTONDOWN:
+                print(self.map.getTileByCoords(event.pos).rect)
+            if event.type == KEYDOWN:
+                if event.key == K_UP:
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))
+                    if nextTile.isWalkable:
+                        self.player.moveNorth()
+                if event.key == K_DOWN:
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery + BaseTile.HEIGHT))
+                    if nextTile.isWalkable:
+                        self.player.moveSouth()
+                if event.key == K_RIGHT:
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx + BaseTile.WIDTH, self.player.rect.centery))
+                    if nextTile.isWalkable:
+                        self.player.moveEast()
+                if event.key == K_LEFT:
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx - BaseTile.WIDTH, self.player.rect.centery))
+                    if nextTile.isWalkable:
+                        self.player.moveWest()

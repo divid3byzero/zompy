@@ -1,18 +1,19 @@
 __author__ = 'Sebastian'
 import random
-
+import math
+import pygame
 from source.model.world.elements.MapElement import *
 
-
 class Map(object):
-
 
     def __init__(self, mapfile):
         self.mapfile = mapfile
         self.amountHorizontal = len(mapfile[0])
         self.amountVertical = len(mapfile)
-        self.tiles = [[None for i in range(self.amountHorizontal)] for j in range(self.amountVertical)]
+        # self.tiles = [[None for i in range(self.amountHorizontal)] for j in range(self.amountVertical)]
+        self.tiles = []
         self.walkableTiles = []
+        self.sprites = pygame.sprite.RenderPlain()
         self.__initTiles()
 
     def __initTiles(self):
@@ -23,17 +24,17 @@ class Map(object):
                 else:
                     tile = MapElement(m, n, True)
                     self.walkableTiles.append(tile)
-                self.tiles[m][n] = tile
+                self.tiles.append(tile)
+                self.sprites.add(tile)
 
-    def getTileByCoords(self, x, y):
-        col = x / BaseTile.WIDTH
-        row = y / BaseTile.HEIGHT
-        return self.tiles[row][col]
+    def getTileByCoords(self, (x ,y)):
+        col = int(math.ceil(x / BaseTile.WIDTH))
+        row = int(math.ceil(y / BaseTile.HEIGHT))
+        if row == 0:
+            number = col
+        else:
+            number = (row * self.amountHorizontal) + col
+        return self.tiles[number]
 
-    def getWalkableTile(self, row = None, col = None):
-        if col is not None and row is not None:
-            if self.tiles[row][col].isWalkable:
-                return self.tiles[row][col]
-
+    def getWalkableTile(self):
         return random.choice(self.walkableTiles)
-

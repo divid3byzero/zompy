@@ -3,19 +3,22 @@ __author__ = 'Hanna'
 import pygame
 from abc import ABCMeta, abstractmethod
 
-class BaseTile(pygame.Rect):
+class BaseTile(pygame.sprite.Sprite):
     __metaclass__ = ABCMeta
 
-    WIDTH = 40
-    HEIGHT = 40
+    WIDTH = 48
+    HEIGHT = 48
 
-    def __init__(self, row, col):
+    def __init__(self, row, col, image):
+        pygame.sprite.Sprite.__init__(self)
         self.row = row
         self.col = col
-        self.x = col * BaseTile.WIDTH
-        self.y = row * BaseTile.HEIGHT
-        pygame.Rect.__init__(self, self.x, self.y, BaseTile.WIDTH, BaseTile.HEIGHT)
+        self.image = self.__loadImage(image)
+        self.rect = self.image.get_rect()
+        self.rect.x = col * BaseTile.WIDTH
+        self.rect.y = row * BaseTile.HEIGHT
 
-    @abstractmethod
-    def draw(self, screen):
-        pass
+    def __loadImage(self, image):
+        if image.get_width() is not BaseTile.WIDTH or image.get_height() is not BaseTile.HEIGHT:
+            image = pygame.transform.scale(self.image, (BaseTile.WIDTH, BaseTile.HEIGHT))
+        return image
