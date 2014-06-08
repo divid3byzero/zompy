@@ -31,11 +31,11 @@ class Map(object):
     def getTileByCoords(self, (x ,y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
         row = int(math.ceil(y / BaseTile.HEIGHT))
-        if row > 0:
-            number = ((row - 1) * self.amountHorizontal) + col
-        else:
+        if row == 0:
             number = col
-        print("row: {0}, col: {1}, number: {2}".format(row, col, number))
+        else:
+            number = (row * self.amountHorizontal) + col
+        print("nummer: {}, top: {}, right: {}, bottom: {}, left: {}".format(number, self.tiles[number].rect.top, self.tiles[number].rect.right, self.tiles[number].rect.bottom, self.tiles[number].rect.left))
         return self.tiles[number]
 
     def getWalkableTile(self):

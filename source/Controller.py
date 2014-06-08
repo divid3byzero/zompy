@@ -43,13 +43,21 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                print(self.map.getTileByCoords(event.pos))
+                self.map.getTileByCoords(event.pos).rect
             if event.type == KEYDOWN:
                 if event.key == K_UP:
-                    self.player.moveNorth()
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))
+                    if nextTile.isWalkable:
+                        self.player.moveNorth()
                 if event.key == K_DOWN:
-                    self.player.moveSouth()
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery + BaseTile.HEIGHT))
+                    if nextTile.isWalkable:
+                        self.player.moveSouth()
                 if event.key == K_RIGHT:
-                    self.player.moveEast()
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx + BaseTile.WIDTH, self.player.rect.centery))
+                    if nextTile.isWalkable:
+                        self.player.moveEast()
                 if event.key == K_LEFT:
-                    self.player.moveWest()
+                    nextTile = self.map.getTileByCoords((self.player.rect.centerx - BaseTile.WIDTH, self.player.rect.centery))
+                    if nextTile.isWalkable:
+                        self.player.moveWest()

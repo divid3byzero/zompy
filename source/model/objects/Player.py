@@ -16,11 +16,9 @@ class Player(Movable):
         Movable.__init__(self, row, col, Player.IMAGE)
         self.sprites = pygame.sprite.RenderPlain()
         self.sprites.add(self)
-        print("Player: Initiale Position ist: x = {0}, y = {1}".format(self.rect.x, self.rect.y))
 
     def moveNorth(self):
         self.rect.y -= Player.STEP_SIZE_HEIGHT
-        print("Player: y-Position = {0}".format(self.rect.y))
 
     def moveEast(self):
         self.rect.x += Player.STEP_SIZE_WIDTH
