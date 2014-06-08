@@ -9,18 +9,14 @@ class Movable(BaseTile):
     def __init__(self, row, col, image):
         BaseTile.__init__(self, row, col, image)
 
-    @abstractmethod
     def moveNorth(self):
-        pass
+        self.rect.y -= BaseTile.HEIGHT
 
-    @abstractmethod
     def moveEast(self):
-        pass
+        self.rect.x += BaseTile.WIDTH
 
-    @abstractmethod
     def moveSouth(self):
-        pass
+        self.rect.y += BaseTile.HEIGHT
 
-    @abstractmethod
     def moveWest(self):
-        pass
+        self.rect.x -= BaseTile.WIDTH

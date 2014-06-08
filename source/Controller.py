@@ -16,6 +16,7 @@ class Controller(object):
         self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
         self.clock = pygame.time.Clock()
+        self.zombies = pygame.sprite.RenderPlain()
 
     def start(self):
         while True:
@@ -43,7 +44,7 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                self.map.getTileByCoords(event.pos).rect
+                print(self.map.getTileByCoords(event.pos).rect)
             if event.type == KEYDOWN:
                 if event.key == K_UP:
                     nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))

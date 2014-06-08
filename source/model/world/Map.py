@@ -6,7 +6,6 @@ from source.model.world.elements.MapElement import *
 
 class Map(object):
 
-
     def __init__(self, mapfile):
         self.mapfile = mapfile
         self.amountHorizontal = len(mapfile[0])
@@ -35,7 +34,6 @@ class Map(object):
             number = col
         else:
             number = (row * self.amountHorizontal) + col
-        print("nummer: {}, top: {}, right: {}, bottom: {}, left: {}".format(number, self.tiles[number].rect.top, self.tiles[number].rect.right, self.tiles[number].rect.bottom, self.tiles[number].rect.left))
         return self.tiles[number]
 
     def getWalkableTile(self):
