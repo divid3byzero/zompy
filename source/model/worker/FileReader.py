@@ -24,4 +24,3 @@ class FileReader(object):
         else:
             raise ValueError("Cannot open map. No such file or directory.")
         return mapNames
-
