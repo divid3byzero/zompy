@@ -1,15 +1,15 @@
-from source.model.theming import GrasslandsThemeFactory
-
 __author__ = 'Sebastian'
 
 import sys
+
 from pygame.locals import *
+
 from Window import *
 from source.model.world.Map import *
-from source.model.objects.Player import Player
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
+
 pygame.init()
 class Controller(object):
 
