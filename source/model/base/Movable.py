@@ -7,7 +7,7 @@ class Movable(BaseTile):
     __metaclass__ = ABCMeta
 
     def __init__(self, pathToImage):
-        BaseTile.__init__(self, pathToImage, walkable=False)
+        BaseTile.__init__(self, pathToImage)
 
     def moveNorth(self):
         self.rect.y -= BaseTile.HEIGHT
