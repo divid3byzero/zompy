@@ -16,18 +16,7 @@ class Map(object):
         self.walkableTiles = []
         self.sprites = pygame.sprite.RenderPlain()
         self.__initTiles()
-
-    def __initTiles(self):
-        for m in range(self.amountVertical):
-            for n in range(self.amountHorizontal):
-                if self.mapfile[m][n] == 1:
-                    tile = self.themeFactory.createThemeElement("wt")
-                else:
-                    tile = self.themeFactory.createThemeElement("ft")
-                    self.walkableTiles.append(tile)
-                tile.setCoordinates(m, n)
-                self.tiles.append(tile)
-                self.sprites.add(tile)
+        self.__collectWalkableTiles()
 
     def getTileByCoords(self, (x ,y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
@@ -37,3 +26,16 @@ class Map(object):
 
     def getWalkableTile(self):
         return random.choice(self.walkableTiles)
+
+    def __initTiles(self):
+        for m in range(self.amountVertical):
+            for n in range(self.amountHorizontal):
+                tile = self.themeFactory.createThemeElement(self.mapfile[m][n])
+                tile.setCoordinates(m, n)
+                self.tiles.append(tile)
+                self.sprites.add(tile)
+
+    def __collectWalkableTiles(self):
+        for tile in self.tiles:
+            if tile.isWalkable:
+                self.walkableTiles.append(tile)

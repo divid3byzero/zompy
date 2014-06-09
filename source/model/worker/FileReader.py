@@ -5,12 +5,13 @@ import os
 import random
 class FileReader(object):
 
-    pathToMaps = os.path.join("resources", "maps")
+    pathToMaps = os.path.join(os.getcwd(), "resources", "maps")
 
     def __init__(self):
         pass
 
     def getRandomMapFile(self):
+
         mapFileNames = self.__getMapFileNames()
         return open(mapFileNames[random.randint(0, len(mapFileNames) - 1)])
 

@@ -12,13 +12,7 @@ class MapGenerator(object):
         if mapFileContent is not None and len(mapFileContent) > 0:
             mapStructure = []
             for elem in mapFileContent:
-
-                tempRow = elem.strip().split(",")
-
-                mapRow = []
-                for stringCoordinate in tempRow:
-                    mapRow.append(int(stringCoordinate))
-
+                mapRow = elem.strip().split(",")
                 mapStructure.append(mapRow)
 
             return mapStructure
