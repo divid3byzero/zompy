@@ -1,3 +1,5 @@
+from source.model.theming import GrasslandsThemeFactory
+
 __author__ = 'Sebastian'
 
 import sys
@@ -6,16 +8,17 @@ from Window import *
 from source.model.world.Map import *
 from source.model.objects.Player import Player
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
+from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 pygame.init()
 class Controller(object):
 
     def __init__(self):
-        self.themeFactory = ZombieThemeFactory()
-        mapFile = self.loadMap()
-        self.map = Map(mapFile, self.themeFactory)
-        self.window = Window(len(mapFile[0]) * BaseTile.WIDTH, len(mapFile) * BaseTile.HEIGHT)
-        self.player = self.initPlayer()
+        self.themeFactory = None
+        self.mapFile = self.loadMap()
+        self.map = None
+        self.window = Window(len(self.mapFile[0]) * BaseTile.WIDTH, len(self.mapFile) * BaseTile.HEIGHT)
+        self.player = None
         self.clock = pygame.time.Clock()
         self.zombies = pygame.sprite.RenderPlain()
         self.renderMenu = True
@@ -37,7 +40,7 @@ class Controller(object):
         mapGenerator = MapGenerator()
         return mapGenerator.generateMap()
 
-    def initPlayer(self):
+    def __initPlayer(self):
         tile = self.map.getWalkableTile()
         player = self.themeFactory.createThemeElement("pl")
         player.setCoordinates(tile.row, tile.col)
@@ -45,6 +48,10 @@ class Controller(object):
 
     def __renderMenu(self):
         self.window.renderMenu()
+
+    def __initGameTheme(self):
+        self.map = Map(self.mapFile, self.themeFactory)
+        self.player = self.__initPlayer()
 
     def __handle_events(self):
         self.clock.tick(30)
@@ -73,4 +80,10 @@ class Controller(object):
                     if nextTile.isWalkable:
                         self.player.moveWest()
                 if event.key == K_1:
+                    self.themeFactory = ZombieThemeFactory()
+                    self.__initGameTheme()
+                    self.renderMenu = False
+                if event.key == K_2:
+                    self.themeFactory = GrasslandsThemeFactory()
+                    self.__initGameTheme()
                     self.renderMenu = False
