@@ -4,9 +4,10 @@ import sys
 from pygame.locals import *
 from Window import *
 from source.model.world.Map import *
-from source.model.objects.Player import Player
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
+from algo.pathfinding import aStar
+
 pygame.init()
 class Controller(object):
 
@@ -47,7 +48,7 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                print(self.map.getTileByCoords(event.pos).rect)
+                aStar(self.map.getNumberOfTile((event.pos)), self.map.getNumberOfTile(self.player.rect.center), self.map)
             if event.type == KEYDOWN:
                 if event.key == K_UP:
                     nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))

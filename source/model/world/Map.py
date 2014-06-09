@@ -11,7 +11,6 @@ class Map(object):
         self.themeFactory = themeFactory
         self.amountHorizontal = len(mapfile[0])
         self.amountVertical = len(mapfile)
-        # self.tiles = [[None for i in range(self.amountHorizontal)] for j in range(self.amountVertical)]
         self.tiles = []
         self.walkableTiles = []
         self.sprites = pygame.sprite.RenderPlain()
@@ -19,10 +18,12 @@ class Map(object):
         self.__collectWalkableTiles()
 
     def getTileByCoords(self, (x ,y)):
+        return self.tiles[self.getNumberOfTile((x, y))]
+
+    def getNumberOfTile(self, (x, y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
         row = int(math.ceil(y / BaseTile.HEIGHT))
-        number = (row * self.amountHorizontal) + col
-        return self.tiles[number]
+        return (row * self.amountHorizontal) + col
 
     def getWalkableTile(self):
         return random.choice(self.walkableTiles)
