@@ -25,8 +25,8 @@ class Map(object):
                 else:
                     tile = self.themeFactory.createThemeElement("ft")
                     self.walkableTiles.append(tile)
-                self.tiles.append(tile)
                 tile.setCoordinates(m, n)
+                self.tiles.append(tile)
                 self.sprites.add(tile)
 
     def getTileByCoords(self, (x ,y)):
