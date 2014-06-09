@@ -7,5 +7,5 @@ import os
 
 class MapElement(BaseTile):
 
-    def __init__(self, pathToImage, walkable):
-            BaseTile.__init__(self, pathToImage, walkable)
+    def __init__(self, image, walkable):
+            BaseTile.__init__(self, image, walkable)

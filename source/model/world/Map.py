@@ -21,9 +21,9 @@ class Map(object):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
                 if self.mapfile[m][n] == 1:
-                    tile = self.themeFactory.createThemeElement("wt")
+                    tile = self.themeFactory.createWall()
                 else:
-                    tile = self.themeFactory.createThemeElement("ft")
+                    tile = self.themeFactory.createFloor()
                     self.walkableTiles.append(tile)
                 tile.setCoordinates(m, n)
                 self.tiles.append(tile)

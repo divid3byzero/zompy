@@ -4,22 +4,24 @@ from source.model.theming.AbstractThemeFactory import AbstractThemeFactory
 from source.model.objects.Player import Player
 from source.model.world.elements.MapElement import MapElement
 import os
+import pygame
+import copy
 class ZombieThemeFactory(AbstractThemeFactory):
 
-    __pathToWalkableImage = os.path.join("resources", "images", "map", "mud.png")
-    __pathToNotWalkableImage = os.path.join("resources", "images", "map", "wall.png")
-    __pathToPlayerImage = os.path.join("resources", "images", "zombie", "zombie.png")
 
     def __init__(self):
-        self.__themeElements = {
-            "wt": MapElement(self.__pathToNotWalkableImage, False),
-            "ft": MapElement(self.__pathToWalkableImage, True),
-            "pl": Player(self.__pathToPlayerImage)
-        }
+        self.__walkableImage = pygame.image.load(os.path.join("resources", "images", "map", "mud.png"))
+        self.__notWalkableImage = pygame.image.load(os.path.join("resources", "images", "map", "wall.png"))
+        self.__playerImage = pygame.image.load(os.path.join("resources", "images", "zombie", "zombie.png"))
 
     def createThemeElement(self, elementType):
-        return self.__themeElements[elementType]
+        return copy.deepcopy(self.__themeElements[elementType])
 
+    def createWall(self):
+        return MapElement(self.__notWalkableImage, False)
 
+    def createFloor(self):
+        return MapElement(self.__walkableImage, True)
 
-
+    def createPlayer(self):
+        return Player(self.__playerImage)

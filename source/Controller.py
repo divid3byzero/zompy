@@ -35,7 +35,7 @@ class Controller(object):
 
     def initPlayer(self):
         tile = self.map.getWalkableTile()
-        player = self.themeFactory.createThemeElement("pl")
+        player = self.themeFactory.createPlayer()
         player.setCoordinates(tile.row, tile.col)
         return player
 
