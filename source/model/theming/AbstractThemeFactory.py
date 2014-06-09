@@ -6,5 +6,12 @@ class AbstractThemeFactory(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def createThemeElement(self, elementType):
+    def createWall(self):
+        pass
+    @abstractmethod
+    def createFloor(self):
+        pass
+
+    @abstractmethod
+    def createPlayer(self):
         pass
