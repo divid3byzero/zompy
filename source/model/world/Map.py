@@ -6,8 +6,9 @@ from source.model.world.elements.MapElement import *
 
 class Map(object):
 
-    def __init__(self, mapfile):
+    def __init__(self, mapfile, themeFactory):
         self.mapfile = mapfile
+        self.themeFactory = themeFactory
         self.amountHorizontal = len(mapfile[0])
         self.amountVertical = len(mapfile)
         # self.tiles = [[None for i in range(self.amountHorizontal)] for j in range(self.amountVertical)]
@@ -20,11 +21,12 @@ class Map(object):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
                 if self.mapfile[m][n] == 1:
-                    tile = MapElement(m, n, False)
+                    tile = self.themeFactory.createThemeElement("wt")
                 else:
-                    tile = MapElement(m, n, True)
+                    tile = self.themeFactory.createThemeElement("ft")
                     self.walkableTiles.append(tile)
                 self.tiles.append(tile)
+                tile.setCoordinates(m, n)
                 self.sprites.add(tile)
 
     def getTileByCoords(self, (x ,y)):

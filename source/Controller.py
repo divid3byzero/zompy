@@ -1,19 +1,20 @@
-from source.model.objects.Player import Player
-
 __author__ = 'Sebastian'
 
 import sys
 from pygame.locals import *
 from Window import *
 from source.model.world.Map import *
+from source.model.objects.Player import Player
+from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 pygame.init()
 class Controller(object):
 
     def __init__(self):
-        self.mapfile = self.loadMap()
-        self.map = Map(self.mapfile)
-        self.window = Window(len(self.mapfile[0]) * BaseTile.WIDTH, len(self.mapfile) * BaseTile.HEIGHT)
+        self.themeFactory = ZombieThemeFactory()
+        mapFile = self.loadMap()
+        self.map = Map(mapFile, self.themeFactory)
+        self.window = Window(len(mapFile[0]) * BaseTile.WIDTH, len(mapFile) * BaseTile.HEIGHT)
         self.player = self.initPlayer()
         self.clock = pygame.time.Clock()
         self.zombies = pygame.sprite.RenderPlain()
@@ -34,7 +35,9 @@ class Controller(object):
 
     def initPlayer(self):
         tile = self.map.getWalkableTile()
-        return Player(tile.row, tile.col)
+        player = self.themeFactory.createThemeElement("pl")
+        player.setCoordinates(tile.row, tile.col)
+        return player
 
     def __handle_events(self):
         self.clock.tick(30)

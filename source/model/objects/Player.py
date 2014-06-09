@@ -7,9 +7,7 @@ from source.model.base.Movable import Movable
 
 class Player(Movable):
 
-    IMAGE = pygame.image.load(os.path.join("resources", "images", "zombie", "zombie.png"))
-
-    def __init__(self, row, col):
-        Movable.__init__(self, row, col, Player.IMAGE)
+    def __init__(self, pathToImage):
+        Movable.__init__(self, pathToImage)
         self.sprites = pygame.sprite.RenderPlain()
         self.sprites.add(self)
