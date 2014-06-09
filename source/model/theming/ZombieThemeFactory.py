@@ -14,9 +14,6 @@ class ZombieThemeFactory(AbstractThemeFactory):
         self.__notWalkableImage = pygame.image.load(os.path.join("resources", "images", "map", "wall.png"))
         self.__playerImage = pygame.image.load(os.path.join("resources", "images", "zombie", "zombie.png"))
 
-    def createThemeElement(self, elementType):
-        return copy.deepcopy(self.__themeElements[elementType])
-
     def createWall(self):
         return MapElement(self.__notWalkableImage, False)
 
