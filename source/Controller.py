@@ -18,11 +18,15 @@ class Controller(object):
         self.player = self.initPlayer()
         self.clock = pygame.time.Clock()
         self.zombies = pygame.sprite.RenderPlain()
+        self.renderMenu = True
 
     def start(self):
         while True:
             self.__handle_events()
-            self.drawWorld()
+            if self.renderMenu:
+                self.__renderMenu()
+            else:
+                self.drawWorld()
             pygame.display.flip()
 
     def drawWorld(self):
@@ -38,6 +42,9 @@ class Controller(object):
         player = self.themeFactory.createThemeElement("pl")
         player.setCoordinates(tile.row, tile.col)
         return player
+
+    def __renderMenu(self):
+        self.window.renderMenu()
 
     def __handle_events(self):
         self.clock.tick(30)
@@ -65,3 +72,5 @@ class Controller(object):
                     nextTile = self.map.getTileByCoords((self.player.rect.centerx - BaseTile.WIDTH, self.player.rect.centery))
                     if nextTile.isWalkable:
                         self.player.moveWest()
+                if event.key == K_1:
+                    self.renderMenu = False
