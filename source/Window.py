@@ -10,7 +10,7 @@ class Window(object):
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.menuElements = ["1: Zombies", "2: Other"]
+        self.menuElements = ["1: Zombies", "2: Grassland"]
 
     def renderMenu(self):
 
