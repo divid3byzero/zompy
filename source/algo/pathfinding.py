@@ -2,42 +2,59 @@ __author__ = 'Sebastian'
 
 import pygame
 
-def aStar(startNumber, targetNumber, map):
+def aStar(startNode, targetNode, map):
 
-
-    def getAdjacentNodes(startNumber):
+    # searching all valid neighbors and setting the start node as predecessor
+    def getAdjacentNodes(startNode):
         adjacentNumbers = { # calculating the numbers of all adjacent nodes
-            "N" : startNumber - map.amountHorizontal, # north
-            "NE" : startNumber - map.amountHorizontal + 1, # north east
-            "E" : startNumber + 1, # east
-            "SE" : startNumber + map.amountHorizontal + 1, # south east
-            "S" : startNumber + map.amountHorizontal, # south
-            "SW" : startNumber + map.amountHorizontal - 1, # south west
-            "W" : startNumber - 1, # west
-            "NW" : startNumber - map.amountHorizontal - 1 # north west
+            "N" : startNode.number - map.amountHorizontal, # north
+            "NE" : startNode.number - map.amountHorizontal + 1, # north east
+            "E" : startNode.number + 1, # east
+            "SE" : startNode.number + map.amountHorizontal + 1, # south east
+            "S" : startNode.number + map.amountHorizontal, # south
+            "SW" : startNode.number + map.amountHorizontal - 1, # south west
+            "W" : startNode.number - 1, # west
+            "NW" : startNode.number - map.amountHorizontal - 1 # north west
         }
 
         adjacents = {}
         for k, v in adjacentNumbers.iteritems():
-            node = map.tiles[v] # getting the node for each number
+            node = map.getTileByNumber(v) # getting the node for each number
             if node.isWalkable and node not in closedList:
+                node.predecessor = startNode
                 adjacents.update({k : node})
         return adjacents
 
 
     # calculate F, G, H
-    def calculateValues(node):
-        pass
+    def calculateValues(node, targetNode):
+        # H is calculated using the manhattan method
+        node.H = abs(node.rect.x - targetNode.rect.x) + abs(node.rect.y - targetNode.rect.y)
 
+        # setting the costs for each step, depending on whether its diagonal or not
+        if abs(node.number - node.predecessor.number) in (1, 10):
+            node.G = node.predecessor.G + 10
+        else:
+            node.G = node.predecessor.G + 14
 
-    openList = [] # all considerable nodes
-    closedList = [] # all checked nodes
-    parentNode = map.tiles[startNumber] # start node
+        node.F = node.G + node.H
 
-    openList.append(parentNode) # adding start node to the open list to process it
-    adjacentNodes = getAdjacentNodes(startNumber) # getting all valid adjacent nodes of the start node
+    # all considerable nodes
+    openList = []
+    # all checked nodes
+    closedList = []
 
-    # setting the parent node of the adjacent nodes
-    for node in adjacentNodes.values():
-        node.predecessor = parentNode
+    # adding start node to the open list to process it
+    openList.append(startNode)
+    # getting all valid adjacent nodes of the start node
+    adjacentNodes = getAdjacentNodes(startNode)
+    # calculating F, G and H for each valid surrounding node
+    # and appending them to the list of not-yet-processed nodes
+    for k, node in adjacentNodes.iteritems():
+        calculateValues(node, targetNode)
+        print("Number: {0}, Direction: {1}, G: {2}, H: {3}, F: {4}".format(node.number, k, node.G, node.H, node.F))
         openList.append(node)
+    # remove the start node from the openlist and append it
+    # to the closed list (because it has been processed now)
+    openList.remove(startNode)
+    closedList.append(startNode)

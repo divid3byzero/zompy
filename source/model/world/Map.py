@@ -20,6 +20,9 @@ class Map(object):
     def getTileByCoords(self, (x ,y)):
         return self.tiles[self.getNumberOfTile((x, y))]
 
+    def getTileByNumber(self, number):
+        return self.tiles[number]
+
     def getNumberOfTile(self, (x, y)):
         col = int(math.ceil(x / BaseTile.WIDTH))
         row = int(math.ceil(y / BaseTile.HEIGHT))
@@ -33,6 +36,7 @@ class Map(object):
             for n in range(self.amountHorizontal):
                 tile = self.themeFactory.createThemeElement(self.mapfile[m][n])
                 tile.setCoordinates(m, n)
+                tile.number = (m * self.amountHorizontal) + n
                 self.tiles.append(tile)
                 self.sprites.add(tile)
 

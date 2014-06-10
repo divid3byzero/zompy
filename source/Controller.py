@@ -48,7 +48,7 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                aStar(self.map.getNumberOfTile((event.pos)), self.map.getNumberOfTile(self.player.rect.center), self.map)
+                aStar(self.map.getTileByCoords((event.pos)), self.map.getTileByCoords(self.player.rect.center), self.map)
             if event.type == KEYDOWN:
                 if event.key == K_UP:
                     nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))
