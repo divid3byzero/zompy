@@ -6,7 +6,7 @@ from Window import *
 from source.model.world.Map import *
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
-from algo.pathfinding import aStar
+from source.algo.Pathfinder import Pathfinder
 
 pygame.init()
 class Controller(object):
@@ -19,6 +19,7 @@ class Controller(object):
         self.player = self.initPlayer()
         self.clock = pygame.time.Clock()
         self.zombies = pygame.sprite.RenderPlain()
+        self.pathfinder = Pathfinder()
 
     def start(self):
         while True:
@@ -48,8 +49,11 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                aStar(self.map.getTileByCoords((event.pos)), self.map.getTileByCoords(self.player.rect.center), self.map)
+                startTile = self.map.getTileByCoords(event.pos)
+                self.pathfinder.find(startTile, self.map.getTileByCoords(self.player.rect.center), self.map)
             if event.type == KEYDOWN:
+                if event.key == K_u:
+                    print("Nummer: {0}".format((self.map.getTileByCoords(pygame.mouse.get_pos())).number))
                 if event.key == K_UP:
                     nextTile = self.map.getTileByCoords((self.player.rect.centerx, self.player.rect.centery - BaseTile.HEIGHT))
                     if nextTile.isWalkable:
