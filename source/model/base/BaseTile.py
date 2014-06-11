@@ -9,9 +9,8 @@ class BaseTile(pygame.sprite.Sprite):
     WIDTH = 48
     HEIGHT = 48
 
-    def __init__(self, image, walkable):
+    def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
-        self.isWalkable = walkable
         self.image = self.__loadImage(image)
         self.rect = self.image.get_rect()
         self.row = None

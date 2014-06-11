@@ -8,4 +8,5 @@ import os
 class MapElement(BaseTile):
 
     def __init__(self, image, walkable):
-            BaseTile.__init__(self, image, walkable)
+            BaseTile.__init__(self, image)
+            self.isWalkable = walkable

@@ -4,11 +4,13 @@ from source.model.base.BaseTile import BaseTile
 from abc import ABCMeta
 from source.model.base.ViewingDirection import ViewingDirection
 import pygame
+
+
 class Movable(BaseTile):
     __metaclass__ = ABCMeta
 
     def __init__(self, image):
-        BaseTile.__init__(self, image, walkable=False)
+        BaseTile.__init__(self, image)
         self.velocity = 4
         self.targetX = None
         self.targetY = None
