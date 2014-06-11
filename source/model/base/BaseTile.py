@@ -22,6 +22,7 @@ class BaseTile(pygame.sprite.Sprite):
             image = pygame.transform.scale(self.image, (BaseTile.WIDTH, BaseTile.HEIGHT))
         return image
 
+
     def setCoordinates(self, row, col):
         self.row = row
         self.col = col
