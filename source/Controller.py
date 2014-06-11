@@ -67,41 +67,47 @@ class Controller(object):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+            if event.type == MOUSEBUTTONDOWN:
+                startTile = self.map.getTileByCoords(event.pos)
+                self.pathfinder.find(startTile, self.map.getTileByCoords(self.player.rect.center), self.map)
 
-        pressedKeys = pygame.key.get_pressed()
+            pressedKeys = pygame.key.get_pressed()
 
-        if pressedKeys[pygame.K_ESCAPE]:
-            pygame.quit()
-            sys.exit(0)
+            if pressedKeys[pygame.K_ESCAPE]:
+                pygame.quit()
+                sys.exit(0)
 
-        if pressedKeys[pygame.K_UP]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y - BaseTile.HEIGHT))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            if pressedKeys[pygame.K_UP]:
+                nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y - BaseTile.HEIGHT))
+                if nextTile.isWalkable:
+                    self.player.setTarget(nextTile)
 
-        if pressedKeys[pygame.K_DOWN]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y + BaseTile.HEIGHT))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            if pressedKeys[pygame.K_DOWN]:
+                nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y + BaseTile.HEIGHT))
+                if nextTile.isWalkable:
+                    self.player.setTarget(nextTile)
 
-        if pressedKeys[pygame.K_RIGHT]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x + BaseTile.WIDTH, self.player.rect.y))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            if pressedKeys[pygame.K_RIGHT]:
+                nextTile = self.map.getTileByCoords((self.player.rect.x + BaseTile.WIDTH, self.player.rect.y))
+                if nextTile.isWalkable:
+                    self.player.setTarget(nextTile)
 
-        if pressedKeys[pygame.K_LEFT]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            if pressedKeys[pygame.K_LEFT]:
+                nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
+                if nextTile.isWalkable:
+                    self.player.setTarget(nextTile)
 
-        if pressedKeys[pygame.K_1]:
-            if self.renderMenu is not False:
-                self.themeFactory = ZombieThemeFactory()
-                self.__initGameTheme()
-                self.renderMenu = False
+            if pressedKeys[pygame.K_1]:
+                if self.renderMenu is not False:
+                    self.themeFactory = ZombieThemeFactory()
+                    self.__initGameTheme()
+                    self.renderMenu = False
 
-        if pressedKeys[pygame.K_2]:
-            if self.renderMenu is not False:
-                self.themeFactory = GrasslandsThemeFactory()
-                self.__initGameTheme()
-                self.renderMenu = False
+            if pressedKeys[pygame.K_2]:
+                if self.renderMenu is not False:
+                    self.themeFactory = GrasslandsThemeFactory()
+                    self.__initGameTheme()
+                    self.renderMenu = False
+
+            if pressedKeys[pygame.K_u]:
+                print("Nummer: {0}".format((self.map.getTileByCoords(pygame.mouse.get_pos())).number))
