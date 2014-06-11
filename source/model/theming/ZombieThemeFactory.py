@@ -1,8 +1,7 @@
 __author__ = 'bene'
 
-from source.model.theming.AbstractThemeFactory import AbstractThemeFactory
-from source.model.objects.Player import Player
-from source.model.world.elements.MapElement import MapElement
+from source.model.theming.AbstractThemeFactory import *
+
 import os
 import pygame
 class ZombieThemeFactory(AbstractThemeFactory):
@@ -13,10 +12,10 @@ class ZombieThemeFactory(AbstractThemeFactory):
         self.__playerImage = pygame.image.load(os.path.join("resources", "images", "zombie", "zombie.png"))
 
     def _createWall(self):
-        return MapElement(self.__notWalkableImage, False)
+        return WallTile(self.__notWalkableImage)
 
     def _createFloor(self):
-        return MapElement(self.__walkableImage, True)
+        return FloorTile(self.__walkableImage)
 
     def _createPlayer(self):
         return Player(self.__playerImage)
