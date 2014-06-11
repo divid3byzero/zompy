@@ -1,11 +1,9 @@
 __author__ = 'Sebastian'
 
 from source.model.base.BaseTile import BaseTile
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from source.model.base.ViewingDirection import ViewingDirection
 import pygame
-
-
 class Movable(BaseTile):
     __metaclass__ = ABCMeta
 
@@ -63,7 +61,6 @@ class Movable(BaseTile):
 
             if self.rect.x - self.targetX is 0 and self.rect.y - self.targetY is 0:
                 self.targetX, self.targetY = None, None
-
 
     def setTarget(self, nextTile):
 
