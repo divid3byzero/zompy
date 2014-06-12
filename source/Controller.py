@@ -6,13 +6,16 @@ from pygame.locals import *
 
 from Window import *
 from source.model.world.Map import *
+from source.model.base.ViewingDirection import ViewingDirection
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
-from source.model.base.ViewingDirection import ViewingDirection
-pygame.init()
-class Controller(object):
+from source.model.objects.Bullet import Bullet
 
+pygame.init()
+
+
+class Controller(object):
     def __init__(self):
         self.themeFactory = None
         self.mapFile = self.loadMap()
@@ -33,6 +36,7 @@ class Controller(object):
 
             if self.player is not None:
                 self.player.move()
+                self.player.shoot()
 
             pygame.display.flip()
             self.clock.tick(30)
@@ -50,6 +54,23 @@ class Controller(object):
         player = self.themeFactory.createThemeElement("pl")
         player.setCoordinates(tile.row, tile.col)
         return player
+
+    def __nextTile(self, viewingDirection):
+
+        nextTile = None
+        if viewingDirection is ViewingDirection.NORTH:
+            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y - BaseTile.HEIGHT))
+
+        if viewingDirection is ViewingDirection.EAST:
+            nextTile = self.map.getTileByCoords((self.player.rect.x + BaseTile.WIDTH, self.player.rect.y))
+
+        if viewingDirection is ViewingDirection.SOUTH:
+            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y + BaseTile.HEIGHT))
+
+        if viewingDirection is ViewingDirection.WEST:
+            nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
+
+        return nextTile
 
     def __renderMenu(self):
         self.window.renderMenu()
@@ -74,24 +95,16 @@ class Controller(object):
             sys.exit(0)
 
         if pressedKeys[pygame.K_UP]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y - BaseTile.HEIGHT))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            self.player.setTarget(self.__nextTile(ViewingDirection.NORTH))
 
         if pressedKeys[pygame.K_DOWN]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y + BaseTile.HEIGHT))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            self.player.setTarget(self.__nextTile(ViewingDirection.SOUTH))
 
         if pressedKeys[pygame.K_RIGHT]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x + BaseTile.WIDTH, self.player.rect.y))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            self.player.setTarget(self.__nextTile(ViewingDirection.EAST))
 
         if pressedKeys[pygame.K_LEFT]:
-            nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
-            if nextTile.isWalkable:
-                self.player.setTarget(nextTile)
+            self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
 
         if pressedKeys[pygame.K_1]:
             if self.renderMenu is not False:
@@ -104,5 +117,10 @@ class Controller(object):
                 self.themeFactory = GrasslandsThemeFactory()
                 self.__initGameTheme()
                 self.renderMenu = False
+
+        if pressedKeys[pygame.K_SPACE]:
+            bullet = Bullet()
+            bullet.setTarget(self.__nextTile(self.player.viewingDirection))
+            self.player.bullet = bullet
 
 
