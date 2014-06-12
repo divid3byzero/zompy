@@ -10,8 +10,3 @@ class Player(Movable):
         Movable.__init__(self, pathToImage)
         self.sprites = pygame.sprite.RenderPlain()
         self.sprites.add(self)
-        self.bullet = None
-
-    def shoot(self):
-        if self.bullet is not None:
-            self.bullet.move(velocityOverride=10)

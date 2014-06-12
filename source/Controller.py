@@ -24,6 +24,7 @@ class Controller(object):
         self.player = None
         self.clock = pygame.time.Clock()
         self.enemies = pygame.sprite.RenderPlain()
+        self.bullets = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
         self.renderMenu = True
 
@@ -32,12 +33,12 @@ class Controller(object):
             if self.renderMenu:
                 self.__renderMenu()
             else:
+                if self.player is not None:
+                    self.player.move()
+                self.enemies.update(self.player, self.map)
+                self.bullets.update()
                 self.__drawWorld()
 
-            if self.player is not None:
-                self.player.move()
-                self.player.shoot()
-            self.enemies.update(self.player, self.map)
             self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
@@ -46,6 +47,7 @@ class Controller(object):
         self.map.sprites.draw(self.window.screen)
         self.player.sprites.draw(self.window.screen)
         self.enemies.draw(self.window.screen)
+        self.bullets.draw(self.window.screen)
 
     def __loadMap(self):
         mapGenerator = MapGenerator()
@@ -74,6 +76,20 @@ class Controller(object):
 
         return nextTile
 
+    def __getBulletDirection(self):
+        bulletTarget = None
+        currentUserTile = self.map.getTileByCoords(self.player.rect.center)
+        if self.player.viewingDirection is ViewingDirection.NORTH:
+            bulletTarget = self.map.getTileByNumber(currentUserTile.number - self.map.amountHorizontal * 3)
+        if self.player.viewingDirection is ViewingDirection.EAST:
+            bulletTarget = self.map.getTileByNumber(currentUserTile.number + 3)
+        if self.player.viewingDirection is ViewingDirection.SOUTH:
+            bulletTarget = self.map.getTileByNumber(currentUserTile.number + self.map.amountHorizontal * 3)
+        if self.player.viewingDirection is ViewingDirection.WEST:
+            bulletTarget = self.map.getTileByNumber(currentUserTile.number - 3)
+
+        return bulletTarget
+
     def __initEnemies(self):
         for _ in range(10):
             tile = self.map.getWalkableTile()
@@ -96,6 +112,16 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
 
+            if event.type == KEYDOWN:
+                if event.key == K_SPACE:
+                    bullet = Bullet()
+                    bulletX = self.player.rect.x
+                    bulletY = self.player.rect.y
+                    bullet.rect.x = bulletX
+                    bullet.rect.y = bulletY
+                    bullet.setTarget(self.__getBulletDirection())
+                    self.bullets.add(bullet)
+
         pressedKeys = pygame.key.get_pressed()
 
         if pressedKeys[pygame.K_ESCAPE]:
@@ -114,11 +140,6 @@ class Controller(object):
 
             if pressedKeys[pygame.K_LEFT]:
                 self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
-
-            if pressedKeys[pygame.K_SPACE]:
-                bullet = Bullet()
-                bullet.setTarget(self.__nextTile(self.player.viewingDirection))
-                self.player.bullet = bullet
 
         if self.renderMenu is True:
             if pressedKeys[pygame.K_1]:
