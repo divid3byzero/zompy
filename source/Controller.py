@@ -1,5 +1,3 @@
-import pygame
-
 __author__ = 'Sebastian'
 
 import sys
@@ -8,7 +6,6 @@ from pygame.locals import *
 
 from Window import *
 from source.model.world.Map import *
-from source.model.base.ViewingDirection import ViewingDirection
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
@@ -37,12 +34,14 @@ class Controller(object):
             if self.renderMenu:
                 self.__renderMenu()
             else:
-                self.__drawWorld()
                 if self.player is not None:
                     self.player.move()
                     self.player.shoot()
+                if pygame.time.get_ticks() % (1000 / self.map.amountHorizontal) is 0:
+                    self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
                 self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
+                self.__drawWorld()
 
             self.__handle_events()
             pygame.display.flip()
@@ -80,13 +79,11 @@ class Controller(object):
 
         return nextTile
 
-    def __initEnemies(self):
-        
-        for _ in range(3):
-            tile = self.map.getWalkableTile()
-            enemy = Enemy()
-            enemy.setCoordinates(tile.row, tile.col)
-            self.enemies.add(enemy)
+    def __spawnEnemy(self):
+        tile = self.map.getSpawnPoint()
+        enemy = Enemy()
+        enemy.setCoordinates(tile.row, tile.col)
+        self.enemies.add(enemy)
 
     def __renderMenu(self):
         self.window.renderMenu()
@@ -94,7 +91,6 @@ class Controller(object):
     def __initGameTheme(self):
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
-        self.__initEnemies()
 
     def __handle_events(self):
 
