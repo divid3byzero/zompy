@@ -44,3 +44,19 @@ class Map(object):
         for tile in self.tiles:
             if tile.isWalkable:
                 self.walkableTiles.append(tile)
+
+    def getNeighbors(self, tile):
+        neighborNumbers = [
+            tile.number - self.amountHorizontal, # north
+            tile.number + 1, # east
+            tile.number + self.amountHorizontal, # south
+            tile.number - 1 # west
+        ]
+
+        neighbors = []
+        for n in neighborNumbers:
+            tile = self.getTileByNumber(n)
+            if tile.isWalkable:
+                neighbors.append(tile)
+
+        return neighbors

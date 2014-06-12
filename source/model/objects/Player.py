@@ -11,6 +11,7 @@ class Player(Movable):
         self.sprites = pygame.sprite.RenderPlain()
         self.sprites.add(self)
         self.bullet = None
+        self.life = 100
 
     def shoot(self):
         if self.bullet is not None:

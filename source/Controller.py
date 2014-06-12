@@ -12,6 +12,7 @@ from source.model.base.ViewingDirection import ViewingDirection
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
+from source.model.worker.CollisonDetector import CollisionDetector
 from source.model.objects.Bullet import Bullet
 from source.model.objects.Enemy import Enemy
 from source.algo.Pathfinder import Pathfinder
@@ -29,6 +30,7 @@ class Controller(object):
         self.enemies = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
         self.renderMenu = True
+        self.collisionDetector = CollisionDetector()
 
     def start(self):
         while True:
@@ -36,11 +38,12 @@ class Controller(object):
                 self.__renderMenu()
             else:
                 self.__drawWorld()
+                if self.player is not None:
+                    self.player.move()
+                    self.player.shoot()
+                self.enemies.update(self.player, self.map)
+                self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
 
-            if self.player is not None:
-                self.player.move()
-                self.player.shoot()
-            self.enemies.update(self.player, self.map)
             self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
@@ -78,7 +81,7 @@ class Controller(object):
         return nextTile
 
     def __initEnemies(self):
-        for _ in range(10):
+        for _ in range(3):
             tile = self.map.getWalkableTile()
             enemy = Enemy()
             enemy.setCoordinates(tile.row, tile.col)
