@@ -42,7 +42,6 @@ class Movable(BaseTile):
         }
 
     def move(self, velocityOverride=None):
-
         vel = self.velocity if velocityOverride is None else velocityOverride
 
         if self.targetX is not None and self.targetY is not None:
@@ -66,14 +65,12 @@ class Movable(BaseTile):
                 self.targetX, self.targetY = None, None
 
     def setTarget(self, nextTile):
-
         if nextTile is not None and nextTile.isWalkable:
             if self.targetX is None and self.targetY is None:
                 self.targetX = nextTile.rect.x
                 self.targetY = nextTile.rect.y
 
     def __getTurningAngle(self, destination):
-
         currentPos = self.possibleDestinations[self.viewingDirection]
         return currentPos[destination]
 
@@ -82,6 +79,3 @@ class Movable(BaseTile):
         if turningAngle is not None:
             self.image = pygame.transform.rotate(self.image, turningAngle)
             self.viewingDirection = destination
-
-    def __setViewingDirection(self, viewingDirection):
-        self.viewingDirection = viewingDirection
