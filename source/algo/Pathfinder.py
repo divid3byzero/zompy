@@ -12,6 +12,8 @@ class Pathfinder(object):
         self.closedList = []
 
     def find(self, zombieTile, playerTile, map):
+        self.openList = []
+        self.closedList = []
         self.startTile = zombieTile
         self.endTile = playerTile
         if not self.map:
@@ -26,7 +28,7 @@ class Pathfinder(object):
             if tile is self.endTile:
                 t = self.endTile
                 while t.parent is not self.startTile:
-                    print("Pfad: {0}".format(t.number))
+                    print(t.number)
                     t = t.parent
                 break
 
@@ -44,6 +46,8 @@ class Pathfinder(object):
                         self.F(n)
                         self.setParentTile(tile, n)
                         self.openList.append(n)
+        print("done")
+
 
     def getNeighbors(self, tile):
         neighborNumbers = [

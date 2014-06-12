@@ -1,3 +1,5 @@
+import pygame
+
 __author__ = 'Sebastian'
 
 import sys
@@ -11,6 +13,7 @@ from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
+
 pygame.init()
 
 class Controller(object):
