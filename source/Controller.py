@@ -32,7 +32,6 @@ class Controller(object):
 
     def start(self):
         while True:
-            self.__handle_events()
             if self.renderMenu:
                 self.__renderMenu()
             else:
@@ -41,6 +40,7 @@ class Controller(object):
             if self.player is not None:
                 self.player.move()
 
+            self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
 

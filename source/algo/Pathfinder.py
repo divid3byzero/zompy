@@ -1,7 +1,5 @@
 __author__ = 'Sebastian'
 
-import pygame
-
 class Pathfinder(object):
 
     def __init__(self):
@@ -21,23 +19,19 @@ class Pathfinder(object):
 
         self.openList.append(self.startTile)
 
-        path = []
         while len(self.openList):
             tile = self.openList.pop(0)
             self.closedList.append(tile)
 
+            if self.startTile is self.endTile:
+                return self.endTile
+
             if tile is self.endTile:
                 t = tile
-                while t.parent is not self.startTile:
-                    path.insert(0, t)
+                while t.parent is not self.startTile and t.parent is not None:
                     t = t.parent
-                return path[0]
-
-                # t = tile
-                # while t.parent is not self.startTile:
-                #     path.insert(0, t)
-                #     t = t.parent
-                # return path[0]
+                if t.parent is self.startTile:
+                    return t
 
             for n in self.getNeighbors(tile):
                 if n not in self.closedList:
