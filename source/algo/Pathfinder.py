@@ -21,16 +21,23 @@ class Pathfinder(object):
 
         self.openList.append(self.startTile)
 
+        path = []
         while len(self.openList):
             tile = self.openList.pop(0)
             self.closedList.append(tile)
 
             if tile is self.endTile:
-                t = self.endTile
+                t = tile
                 while t.parent is not self.startTile:
-                    print(t.number)
+                    path.insert(0, t)
                     t = t.parent
-                break
+                return path[0]
+
+                # t = tile
+                # while t.parent is not self.startTile:
+                #     path.insert(0, t)
+                #     t = t.parent
+                # return path[0]
 
             for n in self.getNeighbors(tile):
                 if n not in self.closedList:
@@ -46,8 +53,6 @@ class Pathfinder(object):
                         self.F(n)
                         self.setParentTile(tile, n)
                         self.openList.append(n)
-        print("done")
-
 
     def getNeighbors(self, tile):
         neighborNumbers = [

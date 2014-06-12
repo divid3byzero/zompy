@@ -17,7 +17,7 @@ class Map(object):
         self.__initTiles()
         self.__collectWalkableTiles()
 
-    def getTileByCoords(self, (x ,y)):
+    def getTileByCoords(self, (x, y)):
         return self.tiles[self.getNumberOfTile((x, y))]
 
     def getTileByNumber(self, number):
