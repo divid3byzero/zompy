@@ -40,7 +40,7 @@ class Controller(object):
             if self.player is not None:
                 self.player.move()
                 self.player.shoot()
-
+            self.enemies.update(self.player, self.map)
             self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
@@ -78,10 +78,11 @@ class Controller(object):
         return nextTile
 
     def __initEnemies(self):
-        tile = self.map.getWalkableTile()
-        enemy = Enemy()
-        enemy.setCoordinates(tile.row, tile.col)
-        self.enemies.add(enemy)
+        for _ in range(10):
+            tile = self.map.getWalkableTile()
+            enemy = Enemy()
+            enemy.setCoordinates(tile.row, tile.col)
+            self.enemies.add(enemy)
 
     def __renderMenu(self):
         self.window.renderMenu()
@@ -97,8 +98,6 @@ class Controller(object):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
-            if event.type == MOUSEBUTTONDOWN:
-                self.enemies.update(self.player.rect.center, self.map)
 
         pressedKeys = pygame.key.get_pressed()
 
@@ -106,34 +105,32 @@ class Controller(object):
             pygame.quit()
             sys.exit(0)
 
-        if pressedKeys[pygame.K_UP]:
-            self.player.setTarget(self.__nextTile(ViewingDirection.NORTH))
+        if self.renderMenu is False:
+            if pressedKeys[pygame.K_UP]:
+                self.player.setTarget(self.__nextTile(ViewingDirection.NORTH))
 
-        if pressedKeys[pygame.K_DOWN]:
-            self.player.setTarget(self.__nextTile(ViewingDirection.SOUTH))
+            if pressedKeys[pygame.K_DOWN]:
+                self.player.setTarget(self.__nextTile(ViewingDirection.SOUTH))
 
-        if pressedKeys[pygame.K_RIGHT]:
-            self.player.setTarget(self.__nextTile(ViewingDirection.EAST))
+            if pressedKeys[pygame.K_RIGHT]:
+                self.player.setTarget(self.__nextTile(ViewingDirection.EAST))
 
-        if pressedKeys[pygame.K_LEFT]:
-            self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
+            if pressedKeys[pygame.K_LEFT]:
+                self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
 
-        if pressedKeys[pygame.K_1]:
-            if self.renderMenu is not False:
-                self.themeFactory = ZombieThemeFactory()
-                self.__initGameTheme()
-                self.renderMenu = False
+            if pressedKeys[pygame.K_SPACE]:
+                bullet = Bullet()
+                bullet.setTarget(self.__nextTile(self.player.viewingDirection))
+                self.player.bullet = bullet
 
-        if pressedKeys[pygame.K_2]:
-            if self.renderMenu is not False:
-                self.themeFactory = GrasslandsThemeFactory()
-                self.__initGameTheme()
-                self.renderMenu = False
+        if self.renderMenu is True:
+            if pressedKeys[pygame.K_1]:
+                    self.themeFactory = ZombieThemeFactory()
+                    self.__initGameTheme()
+                    self.renderMenu = False
 
-        if pressedKeys[pygame.K_SPACE]:
-            bullet = Bullet()
-            bullet.setTarget(self.__nextTile(self.player.viewingDirection))
-            self.player.bullet = bullet
+            if pressedKeys[pygame.K_2]:
+                    self.themeFactory = GrasslandsThemeFactory()
+                    self.__initGameTheme()
+                    self.renderMenu = False
 
-        if pressedKeys[pygame.K_u]:
-            print("Nummer: {0}".format((self.map.getTileByCoords(pygame.mouse.get_pos())).number))

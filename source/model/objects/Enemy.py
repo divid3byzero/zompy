@@ -14,6 +14,7 @@ class Enemy(Movable):
         Movable.__init__(self, Enemy.IMAGE)
         self.pathfinder = Pathfinder()
 
-    def update(self, playerCoords, map):
-        step = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(playerCoords), map)
-        self.rect = step.rect
+    def update(self, player, map):
+        target = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(player.rect.center), map)
+        self.setTarget(target)
+        self.move(velocityOverride=2)
