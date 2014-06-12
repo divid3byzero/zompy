@@ -1,7 +1,7 @@
 __author__ = 'Hanna'
 
 import pygame
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 
 class BaseTile(pygame.sprite.Sprite):
     __metaclass__ = ABCMeta
@@ -20,7 +20,6 @@ class BaseTile(pygame.sprite.Sprite):
         if image.get_width() is not BaseTile.WIDTH or image.get_height() is not BaseTile.HEIGHT:
             image = pygame.transform.scale(self.image, (BaseTile.WIDTH, BaseTile.HEIGHT))
         return image
-
 
     def setCoordinates(self, row, col):
         self.row = row

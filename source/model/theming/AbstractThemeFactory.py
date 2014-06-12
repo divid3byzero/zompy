@@ -1,6 +1,10 @@
 __author__ = 'bene'
 
 from abc import ABCMeta, abstractmethod
+from source.model.objects.Player import Player
+from source.model.world.elements.FloorTile import FloorTile
+from source.model.world.elements.WallTile import WallTile
+
 class AbstractThemeFactory(object):
     __metaclass__ = ABCMeta
 

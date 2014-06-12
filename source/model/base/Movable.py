@@ -5,7 +5,6 @@ from abc import ABCMeta
 from source.model.base.ViewingDirection import ViewingDirection
 import pygame
 
-
 class Movable(BaseTile):
     __metaclass__ = ABCMeta
 

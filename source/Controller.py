@@ -1,3 +1,5 @@
+import pygame
+
 __author__ = 'Sebastian'
 
 import sys
@@ -11,41 +13,44 @@ from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 from source.model.objects.Bullet import Bullet
-
+from source.model.objects.Enemy import Enemy
+from source.algo.Pathfinder import Pathfinder
+from source.model.base.ViewingDirection import ViewingDirection
 pygame.init()
-
 
 class Controller(object):
     def __init__(self):
         self.themeFactory = None
-        self.mapFile = self.loadMap()
+        self.mapFile = self.__loadMap()
         self.map = None
         self.window = Window(len(self.mapFile[0]) * BaseTile.WIDTH, len(self.mapFile) * BaseTile.HEIGHT)
         self.player = None
         self.clock = pygame.time.Clock()
-        self.zombies = pygame.sprite.RenderPlain()
+        self.enemies = pygame.sprite.RenderPlain()
+        self.pathfinder = Pathfinder()
         self.renderMenu = True
 
     def start(self):
         while True:
-            self.__handle_events()
             if self.renderMenu:
                 self.__renderMenu()
             else:
-                self.drawWorld()
+                self.__drawWorld()
 
             if self.player is not None:
                 self.player.move()
                 self.player.shoot()
 
+            self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
 
-    def drawWorld(self):
+    def __drawWorld(self):
         self.map.sprites.draw(self.window.screen)
         self.player.sprites.draw(self.window.screen)
+        self.enemies.draw(self.window.screen)
 
-    def loadMap(self):
+    def __loadMap(self):
         mapGenerator = MapGenerator()
         return mapGenerator.generateMap()
 
@@ -72,12 +77,19 @@ class Controller(object):
 
         return nextTile
 
+    def __initEnemies(self):
+        tile = self.map.getWalkableTile()
+        enemy = Enemy()
+        enemy.setCoordinates(tile.row, tile.col)
+        self.enemies.add(enemy)
+
     def __renderMenu(self):
         self.window.renderMenu()
 
     def __initGameTheme(self):
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
+        self.__initEnemies()
 
     def __handle_events(self):
 
@@ -86,7 +98,7 @@ class Controller(object):
                 pygame.quit()
                 sys.exit(0)
             if event.type == MOUSEBUTTONDOWN:
-                print(self.map.getTileByCoords(event.pos).rect)
+                self.enemies.update(self.player.rect.center, self.map)
 
         pressedKeys = pygame.key.get_pressed()
 
@@ -123,4 +135,5 @@ class Controller(object):
             bullet.setTarget(self.__nextTile(self.player.viewingDirection))
             self.player.bullet = bullet
 
-
+        if pressedKeys[pygame.K_u]:
+            print("Nummer: {0}".format((self.map.getTileByCoords(pygame.mouse.get_pos())).number))
