@@ -81,6 +81,7 @@ class Controller(object):
         return nextTile
 
     def __initEnemies(self):
+        
         for _ in range(3):
             tile = self.map.getWalkableTile()
             enemy = Enemy()

@@ -12,6 +12,7 @@ class GrasslandsThemeFactory(AbstractThemeFactory):
     def __init__(self):
         self.__walkableImage = pygame.image.load(os.path.join("resources", "images", "map", "grass.png"))
         self.__notWalkableImage = pygame.image.load(os.path.join("resources", "images", "map", "wall_grey.png"))
+        self.__spawnImage = pygame.image.load(os.path.join("resources", "images", "map", "spawn.png"))
         self.__playerImage = pygame.image.load(os.path.join("resources", "images", "zombie", "zombie.png"))
 
     def _createWall(self):
@@ -22,3 +23,6 @@ class GrasslandsThemeFactory(AbstractThemeFactory):
 
     def _createPlayer(self):
         return Player(self.__playerImage)
+
+    def _createSpawnPoint(self):
+        return FloorTile(self.__spawnImage, True)
