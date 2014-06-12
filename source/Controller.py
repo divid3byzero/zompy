@@ -29,8 +29,8 @@ class Controller(object):
         self.clock = pygame.time.Clock()
         self.enemies = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
-        self.renderMenu = True
         self.collisionDetector = CollisionDetector()
+        self.renderMenu = True
 
     def start(self):
         while True:
