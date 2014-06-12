@@ -42,24 +42,30 @@ class Movable(BaseTile):
             }
         }
 
-    def move(self):
+    def move(self, velocityOverride=None):
+        if velocityOverride is None:
+            vel = self.velocity
+        else:
+            vel = velocityOverride
+
+        vel = self.velocity if velocityOverride is None else velocityOverride
 
         if self.targetX is not None and self.targetY is not None:
             if self.rect.x - self.targetX < 0:
                 self.__turn(ViewingDirection.EAST)
-                self.rect.centerx += self.velocity
+                self.rect.centerx += vel
 
             if self.rect.y - self.targetY < 0:
                 self.__turn(ViewingDirection.SOUTH)
-                self.rect.centery += self.velocity
+                self.rect.centery += vel
 
             if self.rect.x - self.targetX > 0:
                 self.__turn(ViewingDirection.WEST)
-                self.rect.centerx -= self.velocity
+                self.rect.centerx -= vel
 
             if self.rect.y - self.targetY > 0:
                 self.__turn(ViewingDirection.NORTH)
-                self.rect.centery -= self.velocity
+                self.rect.centery -= vel
 
             if self.rect.x - self.targetX is 0 and self.rect.y - self.targetY is 0:
                 self.targetX, self.targetY = None, None
