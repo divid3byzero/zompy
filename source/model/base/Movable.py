@@ -46,19 +46,19 @@ class Movable(BaseTile):
 
         if self.targetX is not None and self.targetY is not None:
             if self.rect.x - self.targetX < 0:
-                self.__turn(ViewingDirection.EAST)
+                self._turn(ViewingDirection.EAST)
                 self.rect.centerx += vel
 
             if self.rect.y - self.targetY < 0:
-                self.__turn(ViewingDirection.SOUTH)
+                self._turn(ViewingDirection.SOUTH)
                 self.rect.centery += vel
 
             if self.rect.x - self.targetX > 0:
-                self.__turn(ViewingDirection.WEST)
+                self._turn(ViewingDirection.WEST)
                 self.rect.centerx -= vel
 
             if self.rect.y - self.targetY > 0:
-                self.__turn(ViewingDirection.NORTH)
+                self._turn(ViewingDirection.NORTH)
                 self.rect.centery -= vel
 
             if self.rect.x - self.targetX is 0 and self.rect.y - self.targetY is 0:
@@ -74,7 +74,7 @@ class Movable(BaseTile):
         currentPos = self.possibleDestinations[self.viewingDirection]
         return currentPos[destination]
 
-    def __turn(self, destination):
+    def _turn(self, destination):
         turningAngle = self.__getTurningAngle(destination)
         if turningAngle is not None:
             self.image = pygame.transform.rotate(self.image, turningAngle)

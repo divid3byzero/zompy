@@ -85,7 +85,7 @@ class Controller(object):
 
         return nextTile
 
-    def __getBulletTarget(self):
+    """def __getBulletTarget(self):
         bulletTarget = None
         if self.player.viewingDirection is ViewingDirection.NORTH:
             currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
@@ -103,7 +103,7 @@ class Controller(object):
             currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
             bulletTarget = self.map.getTileByNumber(currentPlayerTile.number - 3)
 
-        return bulletTarget
+        return bulletTarget"""
 
     def __spawnEnemy(self):
         tile = self.map.getSpawnPoint()
@@ -127,7 +127,7 @@ class Controller(object):
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.__getBulletTarget(), self.player.viewingDirection)
+                    bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
 
         pressedKeys = pygame.key.get_pressed()
