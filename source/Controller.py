@@ -31,6 +31,9 @@ class Controller(object):
 
     def start(self):
         while True:
+            # PROCESS INPUT
+            self.__handle_events()
+            # LOGIC STUFF
             if self.renderMenu:
                 self.__renderMenu()
             else:
@@ -41,9 +44,9 @@ class Controller(object):
                     self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
                 self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
+                # DRAW EVERYTHING
                 self.__drawWorld()
 
-            self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
 
