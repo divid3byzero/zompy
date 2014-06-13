@@ -10,7 +10,6 @@ from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 from source.model.worker.CollisonDetector import CollisionDetector
-from source.model.objects.Bullet import Bullet
 from source.model.objects.Enemy import Enemy
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
@@ -120,11 +119,6 @@ class Controller(object):
 
             if pressedKeys[pygame.K_LEFT]:
                 self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
-
-            if pressedKeys[pygame.K_SPACE]:
-                bullet = Bullet()
-                bullet.setTarget(self.__nextTile(self.player.viewingDirection))
-                self.player.bullet = bullet
 
         if self.renderMenu is True:
             if pressedKeys[pygame.K_1]:
