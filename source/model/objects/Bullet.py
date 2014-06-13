@@ -34,5 +34,5 @@ class Bullet(Movable):
 
     def update(self):
         self.move()
-        if self.targetX is None and self.targetY is None:
+        if self.targetX is None and self.targetY is None:       
             self.kill()
