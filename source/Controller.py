@@ -9,7 +9,7 @@ from source.model.world.Map import *
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
-from source.model.objects.Bullet import Bullet
+from source.model.worker.CollisonDetector import CollisionDetector
 from source.model.objects.Enemy import Enemy
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
@@ -26,20 +26,27 @@ class Controller(object):
         self.enemies = pygame.sprite.RenderPlain()
         self.bullets = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
+        self.collisionDetector = CollisionDetector()
         self.renderMenu = True
 
     def start(self):
         while True:
+            # PROCESS INPUT
+            self.__handle_events()
+            # LOGIC STUFF
             if self.renderMenu:
                 self.__renderMenu()
             else:
                 if self.player is not None:
                     self.player.move()
+
+                if pygame.time.get_ticks() % (1000 / self.map.amountHorizontal) is 0:
+                    self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
-                self.bullets.update()
+                self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
+                # DRAW EVERYTHING
                 self.__drawWorld()
 
-            self.__handle_events()
             pygame.display.flip()
             self.clock.tick(30)
 
@@ -76,26 +83,12 @@ class Controller(object):
 
         return nextTile
 
-    def __getBulletDirection(self):
-        bulletTarget = None
-        currentUserTile = self.map.getTileByCoords(self.player.rect.center)
-        if self.player.viewingDirection is ViewingDirection.NORTH:
-            bulletTarget = self.map.getTileByNumber(currentUserTile.number - self.map.amountHorizontal * 3)
-        if self.player.viewingDirection is ViewingDirection.EAST:
-            bulletTarget = self.map.getTileByNumber(currentUserTile.number + 3)
-        if self.player.viewingDirection is ViewingDirection.SOUTH:
-            bulletTarget = self.map.getTileByNumber(currentUserTile.number + self.map.amountHorizontal * 3)
-        if self.player.viewingDirection is ViewingDirection.WEST:
-            bulletTarget = self.map.getTileByNumber(currentUserTile.number - 3)
 
-        return bulletTarget
-
-    def __initEnemies(self):
-        for _ in range(10):
-            tile = self.map.getWalkableTile()
-            enemy = Enemy()
-            enemy.setCoordinates(tile.row, tile.col)
-            self.enemies.add(enemy)
+    def __spawnEnemy(self):
+        tile = self.map.getSpawnPoint()
+        enemy = Enemy()
+        enemy.setCoordinates(tile.row, tile.col)
+        self.enemies.add(enemy)
 
     def __renderMenu(self):
         self.window.renderMenu()
@@ -103,7 +96,6 @@ class Controller(object):
     def __initGameTheme(self):
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
-        self.__initEnemies()
 
     def __handle_events(self):
 
@@ -111,16 +103,6 @@ class Controller(object):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
-
-            if event.type == KEYDOWN:
-                if event.key == K_SPACE:
-                    bullet = Bullet()
-                    bulletX = self.player.rect.x
-                    bulletY = self.player.rect.y
-                    bullet.rect.x = bulletX
-                    bullet.rect.y = bulletY
-                    bullet.setTarget(self.__getBulletDirection())
-                    self.bullets.add(bullet)
 
         pressedKeys = pygame.key.get_pressed()
 

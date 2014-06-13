@@ -11,7 +11,8 @@ class AbstractThemeFactory(object):
     themeElements = {
         "wt": "_createWall",
         "ft": "_createFloor",
-        "pl": "_createPlayer"
+        "pl": "_createPlayer",
+        "sp": "_createSpawnPoint"
     }
 
     # Only publicly visible access point.
@@ -30,5 +31,9 @@ class AbstractThemeFactory(object):
 
     @abstractmethod
     def _createPlayer(self):
+        pass
+
+    @abstractmethod
+    def _createSpawnPoint(self):
         pass
 

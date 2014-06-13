@@ -33,7 +33,7 @@ class Pathfinder(object):
                 if t.parent is self.startTile:
                     return t
 
-            for n in self.getNeighbors(tile):
+            for n in map.getNeighbors(tile):
                 if n not in self.closedList:
                     if n in self.openList:
                         if n.g > tile.g + 10:
@@ -48,21 +48,21 @@ class Pathfinder(object):
                         self.setParentTile(tile, n)
                         self.openList.append(n)
 
-    def getNeighbors(self, tile):
-        neighborNumbers = [
-            tile.number - self.map.amountHorizontal, # north
-            tile.number + 1, # east
-            tile.number + self.map.amountHorizontal, # south
-            tile.number - 1 # west
-        ]
-
-        neighbors = []
-        for n in neighborNumbers:
-            tile = self.map.getTileByNumber(n)
-            if tile.isWalkable:
-                neighbors.append(tile)
-
-        return neighbors
+    # def getNeighbors(self, tile):
+    #     neighborNumbers = [
+    #         tile.number - self.map.amountHorizontal, # north
+    #         tile.number + 1, # east
+    #         tile.number + self.map.amountHorizontal, # south
+    #         tile.number - 1 # west
+    #     ]
+    #
+    #     neighbors = []
+    #     for n in neighborNumbers:
+    #         tile = self.map.getTileByNumber(n)
+    #         if tile.isWalkable:
+    #             neighbors.append(tile)
+    #
+    #     return neighbors
 
     def calculate_H(self, tile):
         horizontalDiff = tile.rect.centerx - self.endTile.rect.centerx

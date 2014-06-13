@@ -13,9 +13,11 @@ class Map(object):
         self.amountVertical = len(mapfile)
         self.tiles = []
         self.walkableTiles = []
+        self.spawnPoints = []
         self.sprites = pygame.sprite.RenderPlain()
         self.__initTiles()
         self.__collectWalkableTiles()
+        self.__collectSpawnPoints()
 
     def getTileByCoords(self, (x, y)):
         return self.tiles[self.getNumberOfTile((x, y))]
@@ -31,6 +33,9 @@ class Map(object):
     def getWalkableTile(self):
         return random.choice(self.walkableTiles)
 
+    def getSpawnPoint(self):
+        return random.choice(self.spawnPoints)
+
     def __initTiles(self):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
@@ -44,3 +49,25 @@ class Map(object):
         for tile in self.tiles:
             if tile.isWalkable:
                 self.walkableTiles.append(tile)
+
+    def __collectSpawnPoints(self):
+        for tile in self.walkableTiles:
+            if tile.isSpawnPoint:
+                self.spawnPoints.append(tile)
+
+
+    def getNeighbors(self, tile):
+        neighborNumbers = [
+            tile.number - self.amountHorizontal, # north
+            tile.number + 1, # east
+            tile.number + self.amountHorizontal, # south
+            tile.number - 1 # west
+        ]
+
+        neighbors = []
+        for n in neighborNumbers:
+            tile = self.getTileByNumber(n)
+            if tile.isWalkable:
+                neighbors.append(tile)
+
+        return neighbors
