@@ -11,6 +11,7 @@ from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
 from source.model.worker.CollisonDetector import CollisionDetector
 from source.model.objects.Enemy import Enemy
+from source.model.objects.Bullet import Bullet
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
 pygame.init()
@@ -43,6 +44,7 @@ class Controller(object):
                 if pygame.time.get_ticks() % (1000 / self.map.amountHorizontal) is 0:
                     self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
+                self.bullets.update()
                 self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
                 # DRAW EVERYTHING
                 self.__drawWorld()
@@ -83,6 +85,25 @@ class Controller(object):
 
         return nextTile
 
+    def __getBulletTarget(self):
+        bulletTarget = None
+        if self.player.viewingDirection is ViewingDirection.NORTH:
+            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
+            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number - (self.map.amountHorizontal * 3))
+
+        if self.player.viewingDirection is ViewingDirection.EAST:
+            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
+            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number + 3)
+
+        if self.player.viewingDirection is ViewingDirection.NORTH:
+            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
+            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number + (self.map.amountHorizontal * 3))
+
+        if self.player.viewingDirection is ViewingDirection.WEST:
+            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
+            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number - 3)
+
+        return bulletTarget
 
     def __spawnEnemy(self):
         tile = self.map.getSpawnPoint()
@@ -103,6 +124,11 @@ class Controller(object):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit(0)
+
+            if event.type == KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.__getBulletTarget(), self.player.viewingDirection)
+                    self.bullets.add(bullet)
 
         pressedKeys = pygame.key.get_pressed()
 
