@@ -14,6 +14,7 @@ from source.model.objects.Enemy import Enemy
 from source.model.objects.Bullet import Bullet
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
+from source.model.theming.UserInterface import UserInterface
 pygame.init()
 
 class Controller(object):
@@ -29,6 +30,7 @@ class Controller(object):
         self.pathfinder = Pathfinder()
         self.collisionDetector = CollisionDetector()
         self.renderMenu = True
+        self.userInterface = None
 
     def start(self):
 
@@ -47,6 +49,7 @@ class Controller(object):
                 self.enemies.update(self.player, self.map)
                 self.bullets.update()
                 self.collisionDetector.checkCollisions(self.player.sprites, self.enemies, self.bullets)
+                self.userInterface.draw()
                 # DRAW EVERYTHING
                 self.__drawWorld()
 
@@ -58,6 +61,7 @@ class Controller(object):
         self.player.sprites.draw(self.window.screen)
         self.enemies.draw(self.window.screen)
         self.bullets.draw(self.window.screen)
+        self.userInterface.draw()
 
     def __loadMap(self):
         mapGenerator = MapGenerator()
@@ -98,6 +102,7 @@ class Controller(object):
     def __initGameTheme(self):
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
+        self.userInterface = UserInterface(self.window.screen, self.player)
 
     def __handle_events(self):
 
