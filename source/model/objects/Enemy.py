@@ -13,8 +13,14 @@ class Enemy(Movable):
     def __init__(self):
         Movable.__init__(self, Enemy.IMAGE)
         self.pathfinder = Pathfinder()
+        self.hitpoints = 1
 
     def update(self, player, map):
         target = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(player.rect.center), map)
         self.setTarget(target)
         self.move(velocityOverride=2)
+
+    def hit(self):
+        self.hitpoints -= 1
+        if self.hitpoints <= 0:
+            self.kill()
