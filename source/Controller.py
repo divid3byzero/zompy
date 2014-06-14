@@ -31,6 +31,7 @@ class Controller(object):
         self.renderMenu = True
 
     def start(self):
+
         while True:
             # PROCESS INPUT
             self.__handle_events()
@@ -127,6 +128,7 @@ class Controller(object):
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.Sound(os.path.join("resources", "sound", "shot.wav")).play()
                     bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
 
