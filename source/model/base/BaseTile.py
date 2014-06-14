@@ -11,15 +11,10 @@ class BaseTile(pygame.sprite.Sprite):
 
     def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
-        self.image = self.__loadImage(image)
+        self.image = image
         self.rect = self.image.get_rect()
         self.row = None
         self.col = None
-
-    def __loadImage(self, image):
-        if image.get_width() is not BaseTile.WIDTH or image.get_height() is not BaseTile.HEIGHT:
-            image = pygame.transform.scale(self.image, (BaseTile.WIDTH, BaseTile.HEIGHT))
-        return image
 
     def setCoordinates(self, row, col):
         self.row = row

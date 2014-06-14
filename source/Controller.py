@@ -45,7 +45,7 @@ class Controller(object):
                     self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
                 self.bullets.update()
-                self.collisionDetector.checkPlayerZombieCollision(self.player.sprites, self.enemies)
+                self.collisionDetector.checkCollisions(self.player.sprites, self.enemies, self.bullets)
                 # DRAW EVERYTHING
                 self.__drawWorld()
 
@@ -84,26 +84,6 @@ class Controller(object):
             nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
 
         return nextTile
-
-    """def __getBulletTarget(self):
-        bulletTarget = None
-        if self.player.viewingDirection is ViewingDirection.NORTH:
-            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
-            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number - (self.map.amountHorizontal * 3))
-
-        if self.player.viewingDirection is ViewingDirection.EAST:
-            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
-            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number + 3)
-
-        if self.player.viewingDirection is ViewingDirection.NORTH:
-            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
-            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number + (self.map.amountHorizontal * 3))
-
-        if self.player.viewingDirection is ViewingDirection.WEST:
-            currentPlayerTile = self.map.getTileByCoords(self.player.rect.center)
-            bulletTarget = self.map.getTileByNumber(currentPlayerTile.number - 3)
-
-        return bulletTarget"""
 
     def __spawnEnemy(self):
         tile = self.map.getSpawnPoint()

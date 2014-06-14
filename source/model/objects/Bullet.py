@@ -8,13 +8,13 @@ from source.model.base.Movable import Movable
 
 class Bullet(Movable):
 
-    image = pygame.image.load(os.path.join("resources", "images", "hero", "bullet.png"))
+    image = pygame.image.load(os.path.join("resources", "images", "hero", "bullet_klein.png"))
 
     def __init__(self, startTile, direction):
         Movable.__init__(self, self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = startTile.rect.x
-        self.rect.y = startTile.rect.y
+        self.rect.centerx = startTile.rect.centerx
+        self.rect.centery = startTile.rect.centery
         self.targetX, self.targetY = None, None
         self.direction = direction
         self.velocity = 12
