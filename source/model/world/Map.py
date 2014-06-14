@@ -14,10 +14,12 @@ class Map(object):
         self.tiles = []
         self.walkableTiles = []
         self.spawnPoints = []
+        self.wallTiles = []
         self.sprites = pygame.sprite.RenderPlain()
         self.__initTiles()
         self.__collectWalkableTiles()
         self.__collectSpawnPoints()
+        self.__collectWallTiles()
 
     def getTileByCoords(self, (x, y)):
         return self.tiles[self.getNumberOfTile((x, y))]
@@ -55,6 +57,10 @@ class Map(object):
             if tile.isSpawnPoint:
                 self.spawnPoints.append(tile)
 
+    def __collectWallTiles(self):
+        for tile in self.tiles:
+            if not tile.isWalkable:
+                self.wallTiles.append(tile)
 
     def getNeighbors(self, tile):
         neighborNumbers = [
