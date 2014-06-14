@@ -11,3 +11,4 @@ class Player(Movable):
         self.sprites = pygame.sprite.RenderPlain()
         self.sprites.add(self)
         self.life = 100
+        self.score = 0

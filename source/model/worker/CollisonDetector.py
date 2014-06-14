@@ -1,25 +1,35 @@
 import pygame
-
+import os
 class CollisionDetector(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, playerGroup, enemyGroup, bulletGroup, wallGroup):
+        self.playerGroup = playerGroup
+        self.enemyGroup = enemyGroup
+        self.bulletGroup = bulletGroup
+        self.wallGroup = wallGroup
 
-    def checkCollisions(self, playerGroup, enemyGroup, bulletGroup):
-        self.__checkPlayerZombieCollision(playerGroup, enemyGroup)
-        self.__checkZombieBulletCollision(bulletGroup, enemyGroup)
+    def checkCollisions(self):
+        self.__checkPlayerZombieCollision()
+        self.__checkZombieBulletCollision()
+        self.__checkBulletWallCollision()
 
-    def __checkPlayerZombieCollision(self, playerGroup, enemyGroup):
-        collisions = pygame.sprite.groupcollide(playerGroup, enemyGroup, False, False)
+    def __checkPlayerZombieCollision(self):
+        collisions = pygame.sprite.groupcollide(self.playerGroup, self.enemyGroup, False, False)
         for k, v in collisions.iteritems():
             for _ in v:
                 k.life -= 1
 
-    def __checkZombieBulletCollision(self, bulletGroup, enemyGroup):
-        collisions = pygame.sprite.groupcollide(bulletGroup, enemyGroup, True, False)
+    def __checkZombieBulletCollision(self):
+        collisions = pygame.sprite.groupcollide(self.bulletGroup, self.enemyGroup, True, False)
         for k, v in collisions.iteritems():
             for i in v:
                 i.hit()
+                self.playerGroup.sprites()[0].score += 1
+                print(self.playerGroup.sprites()[0].score)
 
-    def __checkBulletWallCollision(self, wallGroup, bulletGroup):
-        collisions = pygame.sprite.groupcollide(wallGroup, bulletGroup, False, True)
+    # TODO: Bild für Explosion
+    def __checkBulletWallCollision(self):
+        collisions = pygame.sprite.groupcollide(self.wallGroup, self.bulletGroup, False, False)
+        for k, v in collisions.iteritems():
+            for i in v:
+                i.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))

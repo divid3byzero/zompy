@@ -26,8 +26,9 @@ class Controller(object):
         self.clock = pygame.time.Clock()
         self.enemies = pygame.sprite.RenderPlain()
         self.bullets = pygame.sprite.RenderPlain()
+        self.walls = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
-        self.collisionDetector = CollisionDetector()
+        self.collisionDetector = None
         self.renderMenu = True
 
     def start(self):
@@ -46,7 +47,7 @@ class Controller(object):
                     self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
                 self.bullets.update()
-                self.collisionDetector.checkCollisions(self.player.sprites, self.enemies, self.bullets)
+                self.collisionDetector.checkCollisions()
                 # DRAW EVERYTHING
                 self.__drawWorld()
 
@@ -98,6 +99,8 @@ class Controller(object):
     def __initGameTheme(self):
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
+        self.walls.add(self.map.wallTiles)
+        self.collisionDetector = CollisionDetector(self.player.sprites, self.enemies, self.bullets, self.walls)
 
     def __handle_events(self):
 
