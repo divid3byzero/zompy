@@ -8,9 +8,9 @@ from source.model.base.Movable import Movable
 
 class Bullet(Movable):
 
-    image = pygame.image.load(os.path.join("resources", "images", "hero", "bullet_klein.png"))
 
     def __init__(self, startTile, direction):
+        self.image = pygame.image.load(os.path.join("resources", "images", "hero", "bullet_klein.png"))
         Movable.__init__(self, self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = startTile.rect.centerx

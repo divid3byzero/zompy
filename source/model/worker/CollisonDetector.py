@@ -20,16 +20,17 @@ class CollisionDetector(object):
                 k.life -= 1
 
     def __checkZombieBulletCollision(self):
-        collisions = pygame.sprite.groupcollide(self.bulletGroup, self.enemyGroup, True, False)
+        collisions = pygame.sprite.groupcollide(self.bulletGroup, self.enemyGroup, False, False)
         for k, v in collisions.iteritems():
             for i in v:
                 i.hit()
                 self.playerGroup.sprites()[0].score += 1
-                print(self.playerGroup.sprites()[0].score)
+                k.kill()
+
 
     # TODO: Bild fuer Explosion
     def __checkBulletWallCollision(self):
         collisions = pygame.sprite.groupcollide(self.wallGroup, self.bulletGroup, False, False)
         for k, v in collisions.iteritems():
             for i in v:
-                i.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))
+                i.kill()
