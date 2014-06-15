@@ -24,7 +24,8 @@ class CollisionDetector(object):
         for k, v in collisions.iteritems():
             for i in v:
                 i.hit()
-                self.playerGroup.sprites()[0].score += 1
+                if i.hitpoints is 0:
+                    self.playerGroup.sprites()[0].score += 1
                 k.kill()
 
 

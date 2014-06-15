@@ -13,7 +13,7 @@ class Enemy(Movable):
         Movable.__init__(self, self.image)
         self.pathfinder = Pathfinder()
         self.hitpoints = 3
-        self.removeIndex = 0
+        self.removeIndex = False
 
     def update(self, player, map):
         target = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(player.rect.center), map)
@@ -21,9 +21,9 @@ class Enemy(Movable):
         self.move(velocityOverride=2)
         if self.hitpoints is 0:
             self.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))
-            if self.removeIndex is 1:
+            if self.removeIndex:
                 self.kill()
-            self.removeIndex = 1
+            self.removeIndex = True
 
     def hit(self):
         self.hitpoints -= 1

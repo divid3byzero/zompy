@@ -46,6 +46,7 @@ class Controller(object):
                     self.player.move()
 
                 if pygame.time.get_ticks() % (1000 / self.map.amountHorizontal) is 0:
+                    print pygame.time.get_ticks() % (1000 / self.map.amountHorizontal)
                     self.__spawnEnemy()
                 self.enemies.update(self.player, self.map)
                 self.bullets.update()
