@@ -13,7 +13,6 @@ class Window(object):
         self.menuElements = ["1: Zombies", "2: Grassland"]
 
     def renderMenu(self):
-
         self.screen.fill((0,0,0))
         menuFont = font.Font(os.path.join("resources", "fonts", "PrintChar21.ttf"), 16)
         posX = self.screen.get_width() / 2

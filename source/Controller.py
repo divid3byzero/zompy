@@ -52,6 +52,9 @@ class Controller(object):
                 self.bullets.update()
                 self.collisionDetector.checkCollisions()
                 # DRAW EVERYTHING
+                if self.player.life is 0:
+                    self.userInterface.drawLostScreen()
+
                 self.userInterface.draw()
                 self.__drawWorld()
 

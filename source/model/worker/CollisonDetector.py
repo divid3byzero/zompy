@@ -1,5 +1,6 @@
 import pygame
-import os
+
+
 class CollisionDetector(object):
 
     def __init__(self, playerGroup, enemyGroup, bulletGroup, wallGroup):
@@ -27,7 +28,6 @@ class CollisionDetector(object):
                 if i.hitpoints is 0:
                     self.playerGroup.sprites()[0].score += 1
                 k.kill()
-
 
     # TODO: Bild fuer Explosion
     def __checkBulletWallCollision(self):
