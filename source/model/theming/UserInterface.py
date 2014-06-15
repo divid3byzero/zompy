@@ -22,7 +22,6 @@ class UserInterface(object):
         menuFont = pygame.font.Font(os.path.join("resources", "fonts", "PrintChar21.ttf"), 16)
         posX = self.screen.get_width() / 2
         posY = self.screen.get_height() / 2
-        vertOffset = 80
-        menuText = menuFont.render("You have lost. Please press key 'd' to continue...", 1, (106, 227, 36))
+        menuText = menuFont.render("You have lost. Please press key 'p' to continue...", 1, (106, 227, 36))
         menuPosition = menuText.get_rect(centerx=posX, centery=posY)
         self.screen.blit(menuText, menuPosition)

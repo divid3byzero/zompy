@@ -39,8 +39,14 @@ class Controller(object):
             # PROCESS INPUT
             self.__handle_events()
             # LOGIC STUFF
+
             if self.renderMenu:
                 self.__renderMenu()
+
+            elif self.player.life <= 0:
+                self.player.kill()
+                self.userInterface.drawLostScreen()
+
             else:
                 if self.player is not None:
                     self.player.move()
@@ -52,8 +58,7 @@ class Controller(object):
                 self.bullets.update()
                 self.collisionDetector.checkCollisions()
                 # DRAW EVERYTHING
-                if self.player.life is 0:
-                    self.userInterface.drawLostScreen()
+                print "Amount of life left: " + str(self.player.life)
 
                 self.userInterface.draw()
                 self.__drawWorld()
@@ -123,6 +128,10 @@ class Controller(object):
                     pygame.mixer.Sound(os.path.join("resources", "sound", "shot.wav")).play()
                     bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
+
+                if event.key == pygame.K_p:
+                    if self.player.life <= 0:
+                        self.renderMenu = True
 
         pressedKeys = pygame.key.get_pressed()
 
