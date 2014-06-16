@@ -17,6 +17,7 @@ from source.model.base.ViewingDirection import ViewingDirection
 from source.model.theming.UserInterface import UserInterface
 pygame.init()
 
+
 class Controller(object):
     def __init__(self):
         self.themeFactory = None
@@ -38,8 +39,8 @@ class Controller(object):
         while True:
             # PROCESS INPUT
             self.__handle_events()
-            # LOGIC STUFF
 
+            # LOGIC STUFF
             if self.renderMenu:
                 self.__renderMenu()
 
@@ -57,9 +58,8 @@ class Controller(object):
                 self.enemies.update(self.player, self.map)
                 self.bullets.update()
                 self.collisionDetector.checkCollisions()
-                # DRAW EVERYTHING
-                print "Amount of life left: " + str(self.player.life)
 
+                # DRAW EVERYTHING
                 self.userInterface.draw()
                 self.__drawWorld()
 

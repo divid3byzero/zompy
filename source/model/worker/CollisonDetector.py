@@ -29,7 +29,6 @@ class CollisionDetector(object):
                     self.playerGroup.sprites()[0].score += 1
                 k.kill()
 
-    # TODO: Bild fuer Explosion
     def __checkBulletWallCollision(self):
         collisions = pygame.sprite.groupcollide(self.wallGroup, self.bulletGroup, False, False)
         for k, v in collisions.iteritems():
