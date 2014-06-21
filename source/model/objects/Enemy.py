@@ -23,7 +23,7 @@ class Enemy(Movable):
             self.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))
             if self.removeIndex:
                 self.kill()
-                pygame.mixer.Sound(os.path.join("resources", "sound", "blast.wav")).play()
+                pygame.mixer.Sound(os.path.join("resources", "sound", "blast.ogg")).play()
             self.removeIndex = True
 
     def hit(self):
