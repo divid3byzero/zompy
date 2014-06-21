@@ -23,7 +23,7 @@ class UserInterface(object):
         posX = self.screen.get_width() / 2
         posY = self.screen.get_height() / 2
         menuTextFirst = menuFont.render("You have lost.", 1, (106, 227, 36))
-        menuTextSecond = menuFont.render("Please press key 'p' to continue...", 1, (106, 227, 36))
+        menuTextSecond = menuFont.render("Please press key 'p' to continue.", 1, (106, 227, 36))
         menuTextFirstPosition = menuTextFirst.get_rect(centerx=posX, centery=posY)
         menuTextSecondPosition = menuTextSecond.get_rect(centerx=posX, centery=posY + 30)
         self.screen.blit(menuTextFirst, menuTextFirstPosition)
