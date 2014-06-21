@@ -39,6 +39,23 @@ class Map(object):
     def getSpawnPoint(self):
         return random.choice(self.spawnPoints)
 
+    def getNeighbors(self, tile):
+        neighbors = []
+        for direction in ViewingDirection.getViewingDirections():
+            neighborTile = self.getNextTile(tile.rect.center, direction)
+            if neighborTile.isWalkable:
+                neighbors.append(neighborTile)
+        return neighbors
+
+    def getNextTile(self, (x, y), viewingDirection):
+        nextTiles = {
+            ViewingDirection.NORTH: self.getTileByCoords((x, y - BaseTile.HEIGHT)),
+            ViewingDirection.EAST: self.getTileByCoords((x + BaseTile.WIDTH, y)),
+            ViewingDirection.SOUTH: self.getTileByCoords((x, y + BaseTile.HEIGHT)),
+            ViewingDirection.WEST: self.getTileByCoords((x - BaseTile.WIDTH, y))
+        }
+        return nextTiles[viewingDirection]
+
     def __initTiles(self):
         for m in range(self.amountVertical):
             for n in range(self.amountHorizontal):
@@ -62,30 +79,3 @@ class Map(object):
         for tile in self.tiles:
             if not tile.isWalkable:
                 self.wallTiles.append(tile)
-
-    def getNeighbors(self, tile):
-        neighborNumbers = [
-            tile.number - self.amountHorizontal, # north
-            tile.number + 1, # east
-            tile.number + self.amountHorizontal, # south
-            tile.number - 1 # west
-        ]
-
-        neighbors = []
-        for n in neighborNumbers:
-            tile = self.getTileByNumber(n)
-            if tile.isWalkable:
-                neighbors.append(tile)
-
-        return neighbors
-
-    def getNextTile(self, (x, y), viewingDirection):
-
-        nextTiles = {
-            ViewingDirection.NORTH: self.getTileByCoords((x, y - BaseTile.HEIGHT)),
-            ViewingDirection.EAST: self.getTileByCoords((x + BaseTile.WIDTH, y)),
-            ViewingDirection.SOUTH: self.getTileByCoords((x, y + BaseTile.HEIGHT)),
-            ViewingDirection.WEST: self.getTileByCoords((x - BaseTile.WIDTH, y))
-        }
-
-        return nextTiles[viewingDirection]
