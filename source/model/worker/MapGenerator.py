@@ -1,4 +1,5 @@
-__author__ = 'bene'
+__author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
+
 
 from source.model.worker.FileReader import FileReader
 class MapGenerator(object):

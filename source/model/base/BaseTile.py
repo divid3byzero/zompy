@@ -1,4 +1,4 @@
-__author__ = 'Hanna'
+__author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 import pygame
 from abc import ABCMeta
