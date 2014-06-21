@@ -124,7 +124,7 @@ class Controller(object):
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.mixer.Sound(os.path.join("resources", "sound", "shot.wav")).play()
+                    pygame.mixer.Sound(os.path.join("resources", "sound", "shot.ogg")).play()
                     bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
 
