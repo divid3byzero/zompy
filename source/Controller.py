@@ -15,6 +15,7 @@ from source.model.objects.Bullet import Bullet
 from source.algo.Pathfinder import Pathfinder
 from source.model.base.ViewingDirection import ViewingDirection
 from source.model.theming.UserInterface import UserInterface
+
 pygame.init()
 
 
@@ -115,8 +116,14 @@ class Controller(object):
         self.walls.add(self.map.wallTiles)
         self.collisionDetector = CollisionDetector(self.player.sprites, self.enemies, self.bullets, self.walls)
 
-    def __handle_events(self):
+    def __reset(self):
+        self.map = None
+        self.mapFile = self.__loadMap()
+        self.window = Window(len(self.mapFile[0]) * BaseTile.WIDTH, len(self.mapFile) * BaseTile.HEIGHT)
+        self.renderMenu = True
+        self.enemies.empty()
 
+    def __handle_events(self):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -130,8 +137,7 @@ class Controller(object):
 
                 if event.key == pygame.K_p:
                     if self.player.life <= 0:
-                        self.renderMenu = True
-                        self.enemies.empty()
+                        self.__reset()
 
         pressedKeys = pygame.key.get_pressed()
 
@@ -154,12 +160,11 @@ class Controller(object):
 
         if self.renderMenu is True:
             if pressedKeys[pygame.K_1]:
-                    self.themeFactory = ZombieThemeFactory()
-                    self.__initGameTheme()
-                    self.renderMenu = False
+                self.themeFactory = ZombieThemeFactory()
+                self.__initGameTheme()
+                self.renderMenu = False
 
             if pressedKeys[pygame.K_2]:
-                    self.themeFactory = GrasslandsThemeFactory()
-                    self.__initGameTheme()
-                    self.renderMenu = False
-
+                self.themeFactory = GrasslandsThemeFactory()
+                self.__initGameTheme()
+                self.renderMenu = False
