@@ -18,7 +18,7 @@ class CollisionDetector(object):
         collisions = pygame.sprite.groupcollide(self.playerGroup, self.enemyGroup, False, False)
         for k, v in collisions.iteritems():
             for _ in v:
-                k.life -= 0.5
+                k.hit()
 
     def __checkZombieBulletCollision(self):
         collisions = pygame.sprite.groupcollide(self.bulletGroup, self.enemyGroup, False, False)

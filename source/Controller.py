@@ -31,10 +31,10 @@ class Controller(object):
         self.bullets = pygame.sprite.RenderPlain()
         self.walls = pygame.sprite.RenderPlain()
         self.pathfinder = Pathfinder()
+        self.players = pygame.sprite.RenderPlain()
         self.collisionDetector = None
         self.renderMenu = True
         self.userInterface = None
-        self.shotSound = pygame.mixer.Sound(os.path.join("resources", "sound", "shot.ogg"))
 
     def start(self):
 
@@ -47,7 +47,6 @@ class Controller(object):
                 self.__renderMenu()
 
             elif self.player.life <= 0:
-                self.player.kill()
                 self.userInterface.drawLostScreen()
 
             else:
@@ -69,7 +68,7 @@ class Controller(object):
 
     def __drawWorld(self):
         self.map.sprites.draw(self.window.screen)
-        self.player.sprites.draw(self.window.screen)
+        self.players.draw(self.window.screen)
         self.enemies.draw(self.window.screen)
         self.bullets.draw(self.window.screen)
         self.userInterface.draw()
@@ -82,6 +81,7 @@ class Controller(object):
         tile = self.map.getWalkableTile()
         player = self.themeFactory.createThemeElement("pl")
         player.setCoordinates(tile.row, tile.col)
+        self.players.add(player)
         return player
 
     def __spawnEnemy(self):
@@ -98,7 +98,7 @@ class Controller(object):
         self.player = self.__initPlayer()
         self.userInterface = UserInterface(self.window.screen, self.player)
         self.walls.add(self.map.wallTiles)
-        self.collisionDetector = CollisionDetector(self.player.sprites, self.enemies, self.bullets, self.walls)
+        self.collisionDetector = CollisionDetector(self.players, self.enemies, self.bullets, self.walls)
 
     def __reset(self):
         self.map = None
@@ -115,7 +115,7 @@ class Controller(object):
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.shotSound.play()
+                    self.player.shotSound.play()
                     bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
 
