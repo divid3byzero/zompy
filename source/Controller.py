@@ -33,6 +33,7 @@ class Controller(object):
         self.collisionDetector = None
         self.renderMenu = True
         self.userInterface = None
+        self.shotSound = pygame.mixer.Sound(os.path.join("resources", "sound", "shot.ogg"))
 
     def start(self):
 
@@ -82,23 +83,6 @@ class Controller(object):
         player.setCoordinates(tile.row, tile.col)
         return player
 
-    def __nextTile(self, viewingDirection):
-
-        nextTile = None
-        if viewingDirection is ViewingDirection.NORTH:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y - BaseTile.HEIGHT))
-
-        if viewingDirection is ViewingDirection.EAST:
-            nextTile = self.map.getTileByCoords((self.player.rect.x + BaseTile.WIDTH, self.player.rect.y))
-
-        if viewingDirection is ViewingDirection.SOUTH:
-            nextTile = self.map.getTileByCoords((self.player.rect.x, self.player.rect.y + BaseTile.HEIGHT))
-
-        if viewingDirection is ViewingDirection.WEST:
-            nextTile = self.map.getTileByCoords((self.player.rect.x - BaseTile.WIDTH, self.player.rect.y))
-
-        return nextTile
-
     def __spawnEnemy(self):
         tile = self.map.getSpawnPoint()
         enemy = Enemy()
@@ -124,7 +108,7 @@ class Controller(object):
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.mixer.Sound(os.path.join("resources", "sound", "shot.ogg")).play()
+                    self.shotSound.play()
                     bullet = Bullet(self.map.getTileByCoords(self.player.rect.center), self.player.viewingDirection)
                     self.bullets.add(bullet)
 
@@ -141,16 +125,16 @@ class Controller(object):
 
         if self.renderMenu is False:
             if pressedKeys[pygame.K_UP]:
-                self.player.setTarget(self.__nextTile(ViewingDirection.NORTH))
+                self.player.setTarget(self.map.getNextTile(self.player.rect.center, ViewingDirection.NORTH))
 
             if pressedKeys[pygame.K_DOWN]:
-                self.player.setTarget(self.__nextTile(ViewingDirection.SOUTH))
+                self.player.setTarget(self.map.getNextTile(self.player.rect.center, ViewingDirection.SOUTH))
 
             if pressedKeys[pygame.K_RIGHT]:
-                self.player.setTarget(self.__nextTile(ViewingDirection.EAST))
+                self.player.setTarget(self.map.getNextTile(self.player.rect.center, ViewingDirection.EAST))
 
             if pressedKeys[pygame.K_LEFT]:
-                self.player.setTarget(self.__nextTile(ViewingDirection.WEST))
+                self.player.setTarget(self.map.getNextTile(self.player.rect.center, ViewingDirection.WEST))
 
         if self.renderMenu is True:
             if pressedKeys[pygame.K_1]:
