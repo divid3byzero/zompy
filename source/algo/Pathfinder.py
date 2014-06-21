@@ -9,10 +9,10 @@ class Pathfinder(object):
         self.openList = []
         self.closedList = []
 
-    def find(self, zombieTile, playerTile, map):
+    def find(self, enemyTile, playerTile, map):
         self.openList = []
         self.closedList = []
-        self.startTile = zombieTile
+        self.startTile = enemyTile
         self.endTile = playerTile
         if not self.map:
             self.map = map
