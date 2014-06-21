@@ -131,6 +131,7 @@ class Controller(object):
                 if event.key == pygame.K_p:
                     if self.player.life <= 0:
                         self.renderMenu = True
+                        self.enemies.empty()
 
         pressedKeys = pygame.key.get_pressed()
 
