@@ -10,6 +10,7 @@ class Enemy(Movable):
 
     def __init__(self):
         self.image = pygame.image.load(os.path.join("resources", "images", "zombie", "enemy.png"))
+        self.explosionSound = pygame.mixer.Sound(os.path.join("resources", "sound", "blast.ogg"))
         Movable.__init__(self, self.image)
         self.pathfinder = Pathfinder()
         self.hitpoints = 3
@@ -23,7 +24,7 @@ class Enemy(Movable):
             self.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))
             if self.removeIndex:
                 self.kill()
-                pygame.mixer.Sound(os.path.join("resources", "sound", "blast.ogg")).play()
+                self.explosionSound.play()
             self.removeIndex = True
 
     def hit(self):

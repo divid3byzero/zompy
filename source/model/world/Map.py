@@ -3,6 +3,7 @@ import random
 import math
 import pygame
 from source.model.world.elements.MapElement import *
+from source.model.base.ViewingDirection import ViewingDirection
 
 class Map(object):
 
@@ -77,3 +78,14 @@ class Map(object):
                 neighbors.append(tile)
 
         return neighbors
+
+    def getNextTile(self, (x, y), viewingDirection):
+
+        nextTiles = {
+            ViewingDirection.NORTH: self.getTileByCoords((x, y - BaseTile.HEIGHT)),
+            ViewingDirection.EAST: self.getTileByCoords((x + BaseTile.WIDTH, y)),
+            ViewingDirection.SOUTH: self.getTileByCoords((x, y + BaseTile.HEIGHT)),
+            ViewingDirection.WEST: self.getTileByCoords((x - BaseTile.WIDTH, y))
+        }
+
+        return nextTiles[viewingDirection]
