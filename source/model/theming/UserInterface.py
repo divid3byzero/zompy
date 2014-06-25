@@ -5,20 +5,32 @@ import os
 
 
 class UserInterface(object):
-
+    """
+    Class representing the user interface of the game
+    """
     def __init__(self, screen, player):
+        """
+        Constructor of the user interface
+        :param screen: the surface of the game
+        :param player: the current player object
+        """
         self.screen = screen
         self.player = player
 
     def draw(self):
+        """
+        Draws the user interface
+        """
         lifeBar = pygame.Rect(self.screen.get_rect().width - 120, 10, self.player.life, 15)
         pygame.draw.rect(self.screen, (106, 227, 36), lifeBar)
-
         menuFont = pygame.font.Font(os.path.join("resources", "fonts", "PrintChar21.ttf"), 14)
         menuText = menuFont.render(str(self.player.score), 1, (106, 227, 36))
         self.screen.blit(menuText, (self.screen.get_rect().x + 10, 10))
 
     def drawLostScreen(self):
+        """
+        Draws the "game over screen"
+        """
         self.screen.fill((0, 0, 0))
         menuFont = pygame.font.Font(os.path.join("resources", "fonts", "PrintChar21.ttf"), 16)
         posX = self.screen.get_width() / 2

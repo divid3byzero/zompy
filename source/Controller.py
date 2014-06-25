@@ -20,7 +20,13 @@ pygame.init()
 
 
 class Controller(object):
+    """
+    The Controller of the game
+    """
     def __init__(self):
+        """
+        The Constructor of the Controller
+        """
         self.themeFactory = None
         self.mapFile = self.__loadMap()
         self.map = None
@@ -37,7 +43,10 @@ class Controller(object):
         self.userInterface = None
 
     def start(self):
-
+        """
+        Starts the game by "starting" the infinite loop
+        :return:
+        """
         while True:
             # PROCESS INPUT
             self.__handle_events()
@@ -67,6 +76,9 @@ class Controller(object):
             self.clock.tick(30)
 
     def __drawWorld(self):
+        """
+        Draws all game objects
+        """
         self.map.sprites.draw(self.window.screen)
         self.players.draw(self.window.screen)
         self.enemies.draw(self.window.screen)
@@ -74,10 +86,18 @@ class Controller(object):
         self.userInterface.draw()
 
     def __loadMap(self):
+        """
+        Loads and generates the map
+        :return: the generated map
+        """
         mapGenerator = MapGenerator()
         return mapGenerator.generateMap()
 
     def __initPlayer(self):
+        """
+        Builds the Player
+        :return: the player object
+        """
         tile = self.map.getWalkableTile()
         player = self.themeFactory.createThemeElement("pl")
         player.setCoordinates(tile.row, tile.col)
@@ -85,15 +105,25 @@ class Controller(object):
         return player
 
     def __spawnEnemy(self):
+        """
+        Spawns the enemy at a random spawn point
+        """
         tile = self.map.getSpawnPoint()
         enemy = Enemy()
         enemy.setCoordinates(tile.row, tile.col)
         self.enemies.add(enemy)
 
     def __renderMenu(self):
+        """
+        Renders the main menu
+        """
         self.window.renderMenu()
 
     def __initGameTheme(self):
+        """
+        Sets up all needed objects to start the game
+        :return:
+        """
         self.map = Map(self.mapFile, self.themeFactory)
         self.player = self.__initPlayer()
         self.userInterface = UserInterface(self.window.screen, self.player)
@@ -101,6 +131,10 @@ class Controller(object):
         self.collisionDetector = CollisionDetector(self.players, self.enemies, self.bullets, self.walls)
 
     def __reset(self):
+        """
+        Resets the game and all its objects
+        :return:
+        """
         self.map = None
         self.mapFile = self.__loadMap()
         self.window = Window(len(self.mapFile[0]) * BaseTile.WIDTH, len(self.mapFile) * BaseTile.HEIGHT)
@@ -108,6 +142,10 @@ class Controller(object):
         self.enemies.empty()
 
     def __handle_events(self):
+        """
+        Handles all occuring events (pygame events)
+        :return:
+        """
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()

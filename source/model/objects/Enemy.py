@@ -8,8 +8,13 @@ from source.model.base.Movable import Movable
 
 
 class Enemy(Movable):
-
+    """
+    Class representing the enemy.
+    """
     def __init__(self):
+        """
+        Constructor of the enemy
+        """
         self.image = pygame.image.load(os.path.join("resources", "images", "zombie", "enemy.png"))
         self.explosionSound = pygame.mixer.Sound(os.path.join("resources", "sound", "blast.ogg"))
         Movable.__init__(self, self.image)
@@ -18,6 +23,11 @@ class Enemy(Movable):
         self.removeIndex = False
 
     def update(self, player, map):
+        """
+        Used by spritegroups to update all contained sprites
+        :param player: the player (used to get the current coordinates of the player)
+        :param map: the played map
+        """
         target = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(player.rect.center), map)
         self.setTarget(target)
         self.move(velocityOverride=2)
@@ -29,4 +39,7 @@ class Enemy(Movable):
             self.removeIndex = True
 
     def hit(self):
+        """
+        Called when the enemy is hit by a bullet. Reduces the enemies hitpoints.
+        """
         self.hitpoints -= 1

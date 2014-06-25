@@ -5,10 +5,18 @@ from abc import ABCMeta
 from source.model.base.ViewingDirection import ViewingDirection
 import pygame
 
+
 class Movable(BaseTile):
+    """
+    Abstract base class for all movable objects (tiles) of the game
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self, image):
+        """
+        Constructor of the movable class
+        :param image: the image of this tile
+        """
         BaseTile.__init__(self, image)
         self.velocity = 4
         self.targetX = None
@@ -42,6 +50,10 @@ class Movable(BaseTile):
         }
 
     def move(self, velocityOverride=None):
+        """
+        Moves the tile by the given velocity
+        :param velocityOverride: optional, can be used to change the moving speed
+        """
         vel = self.velocity if velocityOverride is None else velocityOverride
 
         if self.targetX is not None and self.targetY is not None:
@@ -65,16 +77,29 @@ class Movable(BaseTile):
                 self.targetX, self.targetY = None, None
 
     def setTarget(self, nextTile):
+        """
+        Sets the target tile for the next step of the movable object
+        :param nextTile: the next tile
+        """
         if nextTile is not None and nextTile.isWalkable:
             if self.targetX is None and self.targetY is None:
                 self.targetX = nextTile.rect.x
                 self.targetY = nextTile.rect.y
 
     def __getTurningAngle(self, destination):
+        """
+        Gets the turning angle according to the current viewing direction and the destination tile
+        :param destination: the destination tile
+        :return: the needed turning angle
+        """
         currentPos = self.possibleDestinations[self.viewingDirection]
         return currentPos[destination]
 
     def _turn(self, destination):
+        """
+        Turns the movable object
+        :param destination: the destination of the movable
+        """
         turningAngle = self.__getTurningAngle(destination)
         if turningAngle is not None:
             self.image = pygame.transform.rotate(self.image, turningAngle)

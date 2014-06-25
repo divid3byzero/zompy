@@ -7,6 +7,9 @@ from source.model.world.elements.FloorTile import FloorTile
 from source.model.world.elements.WallTile import WallTile
 
 class AbstractThemeFactory(object):
+    """
+    Abstract factory class for all theming factories
+    """
     __metaclass__ = ABCMeta
 
     themeElements = {
@@ -16,25 +19,40 @@ class AbstractThemeFactory(object):
         "sp": "_createSpawnPoint"
     }
 
-    # Only publicly visible access point.
     def createThemeElement(self, elementIndicator):
+        """
+        Creates the tile according to the passed elementIndicator
+        :param elementIndicator: the indicator for the tile to be created
+        :return: the tile
+        """
         creator = self.themeElements[elementIndicator]
         return getattr(self, creator)()
 
-    # Protected methods.
     @abstractmethod
     def _createWall(self):
+        """
+        Abstract method for creating wall-tiles. Has to be implemented by concrete factories.
+        """
         pass
 
     @abstractmethod
     def _createFloor(self):
+        """
+        Abstract method for creating floor-tiles. Has to be implemented by concrete factories.
+        """
         pass
 
     @abstractmethod
     def _createPlayer(self):
+        """
+        Abstract method for creating player-objects. Has to be implemented by concrete factories.
+        """
         pass
 
     @abstractmethod
     def _createSpawnPoint(self):
+        """
+        Abstract method for creating spawnpoint-tiles. Has to be implemented by concrete factories.
+        """
         pass
 
