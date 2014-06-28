@@ -9,6 +9,7 @@ from source.model.world.Map import *
 from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
 from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
 from source.model.worker.MapGenerator import MapGenerator
+from source.model.worker.Jukebox import Jukebox
 from source.model.worker.CollisonDetector import CollisionDetector
 from source.model.objects.Enemy import Enemy
 from source.model.objects.Bullet import Bullet
@@ -31,6 +32,7 @@ class Controller(object):
         self.mapFile = self.__loadMap()
         self.map = None
         self.window = Window(len(self.mapFile[0]) * BaseTile.WIDTH, len(self.mapFile) * BaseTile.HEIGHT)
+        self.jukebox = Jukebox()
         self.player = None
         self.clock = pygame.time.Clock()
         self.enemies = pygame.sprite.RenderPlain()
@@ -47,18 +49,23 @@ class Controller(object):
         Starts the game by "starting" the infinite loop
         :return:
         """
+        self.jukebox.playSound("menu")
         while True:
             # PROCESS INPUT
             self.__handle_events()
 
             # LOGIC STUFF
             if self.renderMenu:
+                self.jukebox.playSound("menu")
                 self.__renderMenu()
 
             elif self.player.life <= 0:
+                self.jukebox.playSound("dead")
                 self.userInterface.drawLostScreen()
 
+
             else:
+                self.jukebox.playSound("game")
                 if self.player is not None:
                     self.player.move()
 
