@@ -1,9 +1,0 @@
-- Als Spieler möchte ich Gegner die mich verfolgen, um den Schwierigkeitsgrad zu erhöhen
-- Als Spieler möchte ich Gegner die nicht vor Wände rennen und stehen bleiben, um den Schwierigkeitsgrad zu erhöhen
-- Als Spieler möchte ich auf verschiedenen Karten spielen, um Abwechslung zu haben
-- Als Spieler möchte ich sehen wieviele Punkte ich erreicht habe, um mich mit anderen vergleichen zu können
-- Als Spieler möchte ich sterben können, um die Spannung zu erhöhen
-- Als Spieler möchte ich eine neue Runde starten können wenn ich gestorben bin, ohne das ganze Spiel neustarten zu müssen, um Zeit zu sparen
-- Als Spieler möchte ich nicht durch Wände schiessen können, um die Schwierigkeit zu erhöhen
-- Als Spieler möchte ich nicht durch Wände laufen können, um den Spielspaß zu erhöhen
-- Als Spieler möchte ich passende Sounds hören, um den Spielspaß zu erhöhen
