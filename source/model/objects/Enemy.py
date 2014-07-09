@@ -31,7 +31,9 @@ class Enemy(Movable):
         target = self.pathfinder.find(map.getTileByCoords(self.rect.center), map.getTileByCoords(player.rect.center), map)
         self.setTarget(target)
         self.move(velocityOverride=2)
-        if self.hitpoints is 0:
+        # Bugfix 09.07.2014
+        # was: self.hitpoints = 0, caused enemies to stay alive although marked as dead
+        if self.hitpoints <= 0:
             self.image = pygame.image.load(os.path.join("resources", "images", "hero", "explosion_1.png"))
             if self.removeIndex:
                 self.kill()
