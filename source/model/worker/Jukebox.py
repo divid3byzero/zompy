@@ -18,9 +18,9 @@ class Jukebox(object):
         Starts playback of the given sound if its not already playing.
         :param sound: the wanted sound
         """
-        if sound is self.currentlyPlaying:
-            pass
-        else:
+
+        # Refactoring - 09.07.2014
+        if sound is not self.currentlyPlaying:
             if self.currentlyPlaying:
                 self.music[self.currentlyPlaying].stop()
             if sound is "game":
