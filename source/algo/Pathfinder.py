@@ -1,5 +1,6 @@
 __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
+import heapq
 
 class Pathfinder(object):
     """
@@ -13,6 +14,7 @@ class Pathfinder(object):
         self.endTile = None
         self.map = None
         self.openList = []
+        # heapq.heapify(self.openList)
         self.closedList = []
 
     def find(self, enemyTile, playerTile, map):
@@ -31,9 +33,11 @@ class Pathfinder(object):
             self.map = map
 
         self.openList.append(self.startTile)
+        # heapq.heappush(self.openList, (self.startTile.f, self.startTile))
 
         while len(self.openList):
             tile = self.openList.pop(0)
+            # f, tile = heapq.heappop(self.openList)
             self.closedList.append(tile)
 
             if self.startTile is self.endTile:
@@ -49,6 +53,7 @@ class Pathfinder(object):
             for n in map.getNeighbors(tile):
                 if n not in self.closedList:
                     if n in self.openList:
+                    # if (n.f, n) in self.openList:
                         if n.g > tile.g + 10:
                             self.__G(tile, n)
                             self.__H(n)
@@ -60,6 +65,7 @@ class Pathfinder(object):
                         self.__F(n)
                         self.__setParentTile(tile, n)
                         self.openList.append(n)
+                        # heapq.heappush(self.openList, (n.f, n))
 
     def __calculate_H(self, tile):
         """
