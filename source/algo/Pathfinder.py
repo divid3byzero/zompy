@@ -69,7 +69,7 @@ class Pathfinder(object):
 
     def __calculate_H(self, tile):
         """
-        Calculates the heuristic h-value by using the manhattan distance metric
+        Calculates the heuristic h-value by using thecd / manhattan distance metric
         :param tile: the current tile
         :return: teh h-value
         """
