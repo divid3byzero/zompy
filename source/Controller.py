@@ -5,17 +5,17 @@ import sys
 from pygame.locals import *
 
 from Window import *
-from source.model.world.Map import *
-from source.model.theming.ZombieThemeFactory import ZombieThemeFactory
-from source.model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
-from source.model.worker.MapGenerator import MapGenerator
-from source.model.worker.Jukebox import Jukebox
-from source.model.worker.CollisonDetector import CollisionDetector
-from source.model.objects.Enemy import Enemy
-from source.model.objects.Bullet import Bullet
-from source.algo.Pathfinder import Pathfinder
-from source.model.base.ViewingDirection import ViewingDirection
-from source.model.theming.UserInterface import UserInterface
+from model.world.Map import *
+from model.theming.ZombieThemeFactory import ZombieThemeFactory
+from model.theming.GrasslandsThemeFactory import GrasslandsThemeFactory
+from model.worker.MapGenerator import MapGenerator
+from model.worker.Jukebox import Jukebox
+from model.worker.CollisonDetector import CollisionDetector
+from model.objects.Enemy import Enemy
+from model.objects.Bullet import Bullet
+from algo.Pathfinder import Pathfinder
+from model.base.ViewingDirection import ViewingDirection
+from model.theming.UserInterface import UserInterface
 
 pygame.init()
 

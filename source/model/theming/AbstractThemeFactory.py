@@ -2,9 +2,9 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 
 from abc import ABCMeta, abstractmethod
-from source.model.objects.Player import Player
-from source.model.world.elements.FloorTile import FloorTile
-from source.model.world.elements.WallTile import WallTile
+from model.objects.Player import Player
+from model.world.elements.FloorTile import FloorTile
+from model.world.elements.WallTile import WallTile
 
 class AbstractThemeFactory(object):
     """

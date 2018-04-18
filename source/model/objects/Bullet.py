@@ -3,8 +3,8 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 import os
 import pygame
-from source.model.base.ViewingDirection import ViewingDirection
-from source.model.base.Movable import Movable
+from model.base.ViewingDirection import ViewingDirection
+from model.base.Movable import Movable
 
 
 class Bullet(Movable):

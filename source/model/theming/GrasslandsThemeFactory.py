@@ -2,10 +2,10 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 
 
-from source.model.theming.AbstractThemeFactory import AbstractThemeFactory
-from source.model.objects.Player import Player
-from source.model.world.elements.FloorTile import FloorTile
-from source.model.world.elements.WallTile import WallTile
+from model.theming.AbstractThemeFactory import AbstractThemeFactory
+from model.objects.Player import Player
+from model.world.elements.FloorTile import FloorTile
+from model.world.elements.WallTile import WallTile
 import os
 import pygame
 

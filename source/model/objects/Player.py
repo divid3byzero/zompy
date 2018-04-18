@@ -2,7 +2,7 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 import os
 import pygame
-from source.model.base.Movable import Movable
+from model.base.Movable import Movable
 
 
 class Player(Movable):

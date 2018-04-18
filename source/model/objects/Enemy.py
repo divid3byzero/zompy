@@ -3,8 +3,8 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
 import os
 import pygame
-from source.algo.Pathfinder import Pathfinder
-from source.model.base.Movable import Movable
+from algo.Pathfinder import Pathfinder
+from model.base.Movable import Movable
 
 
 class Enemy(Movable):

@@ -3,8 +3,8 @@ __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 import random
 import math
 import pygame
-from source.model.world.elements.MapElement import *
-from source.model.base.ViewingDirection import ViewingDirection
+from model.world.elements.MapElement import *
+from model.base.ViewingDirection import ViewingDirection
 
 class Map(object):
     """

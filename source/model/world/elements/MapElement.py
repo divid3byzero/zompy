@@ -1,6 +1,6 @@
 __author__ = 'Benedikt Buchner (7001697) / Sebastian Hanna (7001788)'
 
-from source.model.base.BaseTile import BaseTile
+from model.base.BaseTile import BaseTile
 from abc import ABCMeta
 
 class MapElement(BaseTile):
